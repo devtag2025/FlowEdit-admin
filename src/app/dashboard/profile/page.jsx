@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { SettingsInput } from "@/components/settings/SettingsInput";
-import { SettingsToggle } from "@/components/settings/SettingsToggle";
-import { SettingsSection } from "@/components/settings/SettingsSection";
+import { SettingsInput } from "@/components/Settings/SettingsInput";
+import { SettingsToggle } from "@/components/Settings/SettingsToggle";
+import { SettingsSection } from "@/components/Settings/SettingsSection";
 import Image from "next/image";
 import { NotebookPenIcon } from "lucide-react";
 
@@ -75,8 +75,8 @@ export default function AccountSettings() {
           description="Update your profile and personal details."
         >
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 mb-6">
-            <div className="relative flex-shrink-0">
-              <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-br from-primary to-secondary overflow-hidden">
+            <div className="relative shrink-0">
+              <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-linear-to from-primary to-secondary overflow-hidden">
                 <Image
                   width={200}
                   height={200}

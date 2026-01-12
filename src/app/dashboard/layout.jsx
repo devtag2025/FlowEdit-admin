@@ -77,8 +77,8 @@ export default function DashboardLayout({ children }) {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 w-72`}
       >
-        <div className="h-full flex flex-col bg-linear-to-b bg-primary border-r border-white/10 backdrop-blur-xl">
-          <div className="flex items-center justify-between px-20 pt-8 pb-6 border-b border-white/10">
+        <div className="h-full flex flex-col bg-linear-to-b bg-primary  backdrop-blur-xl">
+          <div className="flex items-center justify-between px-20 pt-8 pb-6 ">
             <Link href="/dashboard" className="flex items-center gap-3 group">
               <span className="text-3xl font-extrabold font-onest">
                 FlowEdit
@@ -194,7 +194,7 @@ export default function DashboardLayout({ children }) {
       )}
 
       <div className="lg:ml-72 pb-20 lg:pb-0">
-        <header className="sticky top-0 z-20 bg-secondary border-b border-gray-800">
+        <header className="sticky top-0 z-20 bg-secondary ">
           <div className="flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4">
             <div className="flex items-center gap-3">
               <button
@@ -205,11 +205,6 @@ export default function DashboardLayout({ children }) {
                 <Menu className="w-5 h-5 text-accent" />
               </button>
 
-              <Link href="/dashboard" className="lg:hidden">
-                <span className="text-xl font-extrabold font-onest">
-                  FlowEdit
-                </span>
-              </Link>
             </div>
 
             <div className="flex items-center gap-2 lg:gap-3">
