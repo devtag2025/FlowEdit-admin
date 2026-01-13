@@ -4,6 +4,7 @@ import { X, Upload, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { DialogClose } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
@@ -77,9 +78,20 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
   "
       >
         <DialogHeader className="bg-tertiary border-primary/20 p-10 pb-4 top-0">
-          <DialogTitle className="text-2xl font-bold font-onest text-accent">
-            New Project Request
-          </DialogTitle>
+          <div className="relative">
+            <DialogTitle className="text-2xl font-bold font-onest text-accent">
+              New Project Request
+            </DialogTitle>
+
+            <DialogClose asChild>
+              <button
+                className="absolute right-0 top-0 rounded-md p-2 text-accent/60 hover:text-accent hover:bg-accent/10 transition"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </DialogClose>
+          </div>
           <DialogDescription className="text-md font-onest text-accent/60">
             Each request creates one completed video. For multiple outputs,
             submit separate requests
@@ -156,71 +168,86 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
             </FormField>
           </FormSection>
 
-          <FormSection title="Footage & Assets">
-            <FormField label="Upload Footage (File, Dropbox, or TechSmith)">
-              <div className="space-y-3">
-                <div className="border-2 border-dashed border-accent/20 rounded-lg p-6 text-center hover:border-primary/40 transition-colors">
-                  <input
-                    type="file"
-                    multiple
-                    onChange={handleFileUpload}
-                    className="hidden"
-                    id="file-upload"
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="cursor-pointer flex flex-col items-center gap-2"
+          <FormField label="Optional Uploads">
+            <div className="space-y-3">
+              <div className="border-2 border-dashed border-accent/20 rounded-lg p-8 text-center hover:border-primary/40 transition-colors">
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer flex flex-col items-center gap-3"
+                >
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      document.getElementById("file-upload").click()
+                    }
+                    className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg flex items-center gap-2"
                   >
-                    <div>
-                      <Button
-                        onClick={() => setIsProjectModalOpen(true)}
-                        className="flex items-center justify-center gap-2 w-auto sm:w-auto bg-primary text-white px-7 sm:px-6 h-10 sm:h-11 rounded-xl text-sm sm:text-base font-semibold font-onest"
-                      >
-                        <Upload className="h-4 w-4 sm:h-5 sm:w-5" />
-                        Upload Files
-                      </Button>
-                    </div>
-                    <p className="text-sm text-accent/60">
+                    <Upload className="w-4 h-4" />
+                    Upload Files
+                  </Button>
+                  <p className="text-sm text-accent/60">
                     Upload Supporting files (max total 1GB)
-                    </p>
-                    
-                  </label>
-                </div>
-
-                {uploadedFiles.length > 0 && (
-                  <div className="space-y-2">
-                    {uploadedFiles.map((file, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between bg-white p-3 rounded-lg border border-accent/10"
-                      >
-                        <span className="text-sm text-accent truncate flex-1">
-                          {file.name}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="text-danger hover:text-danger/80 ml-2"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                  </p>
+                </label>
               </div>
-            </FormField>
 
-          </FormSection>
+              {uploadedFiles.length > 0 && (
+                <div className="space-y-2">
+                  {uploadedFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between bg-white p-3 rounded-lg border border-accent/10"
+                    >
+                      <span className="text-sm text-accent truncate flex-1">
+                        {file.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeFile(index)}
+                        className="text-danger hover:text-danger/80 ml-2"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </FormField>
+
+          <div className="flex items-start gap-3 bg-primary/5 p-8 rounded-lg border border-primary/20">
+            <input
+              type="checkbox"
+              id="branding-template"
+              {...register("applyBranding")}
+              className="mt-3 w-4 h-4 rounded border-accent/30 text-primary focus:ring-primary"
+            />
+            <label
+              htmlFor="branding-template"
+              className="flex-1 cursor-pointer"
+            >
+              <p className="text-lg font-onest font-bold text-accent">
+                Apply my branding template to this project
+              </p>
+              <p className="text-xs font-onest text-accent/60 mt-1">
+                Used saved colors, fonts, logos, and editing style
+              </p>
+            </label>
+          </div>
 
           <FormSection title="Editing Instructions">
-          
-
-          <FormField label="Style Preferences">
-  <Textarea
-    placeholder="Describe the style, mood, transitions, etc."
-    rows={5}
-    className="
+            <FormField label="Style Preferences">
+              <Textarea
+                placeholder="Describe the style, mood, transitions, etc."
+                rows={5}
+                className="
       bg-white!
       border-accent/20
       text-accent
@@ -233,25 +260,23 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
       wrap-break-word
       overflow-x-hidden    
     "
-  />
-</FormField>
+              />
+            </FormField>
 
-
-            <div >
+            <div>
               <div>
                 <p className="text-sm font-medium text-accent/50">
                   Style direction, pacing, mood, music preferences...
                 </p>
-              
               </div>
-           
             </div>
           </FormSection>
 
           <FormSection title="Additional Notes">
-         
-
-            <FormField label="Notes for Editor (optional)" error={errors.additionalNotes}>
+            <FormField
+              label="Notes for Editor (optional)"
+              error={errors.additionalNotes}
+            >
               <Textarea
                 placeholder="Any additional clarifications..."
                 rows={4}
@@ -272,28 +297,29 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
             </FormField>
           </FormSection>
 
-          <div className="flex gap-3 justify-between pt-4 border-t border-accent/10">
-          <div>
-            <span className="bg-white text-accent font-onest">
-              You will receive a confirmation once your project is added to your dashboard
-            </span>
-          </div>
-          <div> <Button
-              type="button"
-           
-              onClick={() => setIsOpen(false)}
-              className="bg-white text-md font-semibold font-onest text-primary hover:bg-accent/5"
-            >
-              Reset to defaults
-            </Button>
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              className="bg-primary text-md font-onest font-semibold hover:bg-primary/90 text-white"
-            >
-              Submit Request
-            </Button></div>
-           
+          <div className="flex flex-col gap-4 pt-4 border-t border-accent/10 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm sm:text-base text-accent font-onest">
+              You will receive a confirmation once your project is added to your
+              dashboard
+            </p>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:items-center">
+              <Button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="w-full sm:w-auto bg-white text-md font-semibold font-onest text-primary hover:bg-accent/5"
+              >
+                Reset to defaults
+              </Button>
+
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                className="w-full sm:w-auto bg-primary text-md font-onest font-semibold hover:bg-primary/90 text-white"
+              >
+                Submit Request
+              </Button>
+            </div>
           </div>
         </div>
       </DialogContent>
