@@ -72,32 +72,28 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-secondary text-white">
-      
       <aside
         className={`fixed top-0 left-0 z-40 h-screen transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 w-72`}
       >
-        <div className="h-full flex flex-col bg-gradient-to-b bg-primary border-r border-white/10 backdrop-blur-xl">
-        
-          <div className="flex items-center justify-between px-6 pt-8 pb-6 border-b border-white/10">
+        <div className="h-full flex flex-col bg-linear-to-b bg-primary  backdrop-blur-xl">
+          <div className="flex items-center justify-between px-20 pt-8 pb-6 ">
             <Link href="/dashboard" className="flex items-center gap-3 group">
               <span className="text-3xl font-extrabold font-onest">
                 FlowEdit
               </span>
             </Link>
-            
-           
+
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-white/10 relative left-12 bottom-8 transition-colors"
               aria-label="Close sidebar"
             >
               <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
-        
           <nav className="flex-1 p-4 space-y-2 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -110,8 +106,8 @@ export default function DashboardLayout({ children }) {
                   onClick={() => setIsSidebarOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${
                     active
-                      ? "bg-purple-500/20 border border-purple-500/50 shadow-lg shadow-purple-500/20"
-                      : "hover:bg-white/5 border border-transparent hover:border-purple-500/30 active:bg-white/10"
+                      ? "bg-white/60 border border-accent shadow-lg shadow-purple-500/20"
+                      : "hover:bg-white/30 border border-transparent hover:border-purple-500/30  active:bg-white/10"
                   }`}
                   aria-current={active ? "page" : undefined}
                 >
@@ -119,26 +115,25 @@ export default function DashboardLayout({ children }) {
                     className={`w-5 h-5 transition-colors ${
                       active
                         ? "text-accent"
-                        : "text-tertiary group-hover:text-accent/40"
+                        : "text-white group-hover:text-tertiary/80"
                     }`}
                   />
                   <span
                     className={`font-medium ${
                       active
                         ? "text-accent"
-                        : "text-tertiary group-hover:text-accent/40"
+                        : "text-white group-hover:text-tertiary/80"
                     }`}
                   >
                     {item.name}
                   </span>
                   {active && (
-                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                    <div className="ml-auto w-2 h-2 rounded-full bg-accent animate-pulse" />
                   )}
                 </Link>
               );
             })}
 
-            
             <button
               disabled={isLoading}
               onClick={onLogout}
@@ -171,27 +166,18 @@ export default function DashboardLayout({ children }) {
             </button>
           </nav>
 
-         
-         <div className="p-4 border-t border-white/10">
-            <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10">
-              <button
-                className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:bg-white lg:text-purple-600 lg:shadow-lg hidden lg:block"
-              >
+          <div className="p-4 border-t border-white/10">
+            <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-tertiary">
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:bg-white lg:text-accent lg:shadow-lg hidden lg:block">
                 Desktop
               </button>
-              <button
-                className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:text-gray-400 lg:hover:text-white lg:hidden bg-white text-purple-600 shadow-lg"
-              >
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:text-tertiary lg:hover:text-white lg:hidden bg-white text-accent shadow-lg">
                 Mobile
               </button>
-              <button
-                className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-gray-400 hover:text-white hidden lg:block"
-              >
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-tertiary hover:text-white hidden lg:block">
                 Mobile
               </button>
-              <button
-                className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-gray-400 hover:text-white lg:hidden"
-              >
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-tertiary hover:text-white lg:hidden">
                 Desktop
               </button>
             </div>
@@ -199,7 +185,6 @@ export default function DashboardLayout({ children }) {
         </div>
       </aside>
 
-    
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/60 lg:hidden backdrop-blur-sm"
@@ -208,52 +193,39 @@ export default function DashboardLayout({ children }) {
         />
       )}
 
-     
       <div className="lg:ml-72 pb-20 lg:pb-0">
-     
-        <header className="sticky top-0 z-20 bg-secondary border-b border-gray-800">
+        <header className="sticky top-0 z-20 bg-secondary ">
           <div className="flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4">
-         
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-900 border border-gray-800 transition-colors active:bg-gray-800"
+                className="lg:hidden p-2  hover:bg-gray-900 border border-tertiary rounded-full transition-colors active:bg-gray-800"
                 aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
               >
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-5 h-5 text-accent" />
               </button>
 
-              <Link href="/dashboard" className="lg:hidden">
-                <span className="text-xl font-extrabold font-onest">
-                  FlowEdit
-                </span>
-              </Link>
             </div>
 
-           
             <div className="flex items-center gap-2 lg:gap-3">
-             
-              <button 
-                className="hidden sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
+              <button
+                className=" sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
                 aria-label="Notifications"
               >
                 <Bell className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
               </button>
 
-            
-              <button 
-                className="hidden sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
-                aria-label="Settings"
-              >
-                <Settings className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
-              </button>
+              <Link href="/dashboard/profile">
+                <button
+                  className="sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
+                  aria-label="Settings"
+                >
+                  <Settings className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
+                </button>
+              </Link>
 
-          
-              <Link
-                href="/dashboard/profile"
-                className="relative flex items-center gap-2 px-2 py-1.5 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95"
-              >
-                <div className="relative w-7 h-7 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-gradient-to-br from-purple-600 to-purple-400 flex-shrink-0">
+              <div className="relative flex items-center gap-2 px-1 py-1 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95">
+                <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-gradient-to-br from-purple-600 to-purple-400 flex-shrink-0">
                   <Image
                     src="https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg"
                     alt="Avatar"
@@ -265,14 +237,13 @@ export default function DashboardLayout({ children }) {
                 <span className="hidden lg:block text-sm lg:text-base font-semibold text-accent">
                   John Doe
                 </span>
-              </Link>
+              </div>
             </div>
           </div>
         </header>
 
         <main className="min-h-[calc(100vh-8rem)]">{children}</main>
       </div>
-
     </div>
   );
 }

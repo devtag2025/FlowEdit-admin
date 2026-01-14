@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { socialPlatforms } from "@/utils/social";
-import { SocialCard } from "@/components/social/SocialCard";
+import { SocialCard } from "@/components/Social/SocialCard";
 import { Lock } from "lucide-react";
 export default function SocialConnections() {
   return (
