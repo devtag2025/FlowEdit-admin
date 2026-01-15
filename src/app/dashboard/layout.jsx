@@ -107,24 +107,42 @@ export default function DashboardLayout({ children }) {
               const active = isActive(item.href);
 
               return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${
-                    active
-                      ? "bg-white/60 border border-accent shadow-lg shadow-purple-500/20"
-                      : "hover:bg-white/30 border border-transparent hover:border-purple-500/30  active:bg-white/10"
-                  }`}
-                  aria-current={active ? "page" : undefined}
-                >
-                  <Icon
-                    className={`w-5 h-5 transition-colors ${
-                      active
-                        ? "text-accent"
-                        : "text-white group-hover:text-tertiary/80"
-                    }`}
-                  />
+            <Link
+  key={item.name}
+  href={item.href}
+  onClick={() => setIsSidebarOpen(false)}
+  className={`relative flex items-center gap-3 px-5 py-2 rounded-xl transition-all duration-300 group
+    ${
+      active
+        ? `
+          bg-linear-to-tr  from-purple-500/70 from-tertiary/90 to-secondary/50
+          text-white
+          shadow-lg shadow-primary/25
+        `
+        : `
+          text-accent
+          hover:bg-white/30
+          hover:shadow-md hover:shadow-purple-500/10
+          active:bg-white/10
+        `
+    }
+  `}
+  aria-current={active ? "page" : undefined}
+>
+                  <div
+  className={`group flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
+    active ? "bg-tertiary" : "bg-transparent"
+  }`}
+>
+  <Icon
+    className={`w-5 h-5 transition-colors ${
+      active
+        ? "text-accent"
+        : "text-white/70 group-hover:text-tertiary/80"
+    }`}
+  />
+</div>
+
                   <span
                     className={`font-medium ${
                       active
@@ -134,9 +152,7 @@ export default function DashboardLayout({ children }) {
                   >
                     {item.name}
                   </span>
-                  {active && (
-                    <div className="ml-auto w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  )}
+                 
                 </Link>
               );
             })}

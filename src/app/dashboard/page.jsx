@@ -8,10 +8,27 @@ import { Input } from "@/components/ui/input";
 import { StatusBadge, ActionButton } from "@/components/Dashboard/StatusBadge";
 import FilterButton from "@/components/Dashboard/FilterButton";
 import NewProjectRequestModal from "@/components/Dashboard/NewProjectModal/Modal";
+import ProjectDetailPopUp from "@/components/Dashboard/ProjectPopUp/ProjectDetailPopUp";
+
 const Dashboard = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+  // ✅ NEW: popup state
+  const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const handleOpenProject = (project) => {
+    setSelectedProject(project);
+    setIsProjectDetailOpen(true);
+  };
+
+  const handleCloseProject = () => {
+    setIsProjectDetailOpen(false);
+    // optional: clear selection after close
+    // setSelectedProject(null);
+  };
 
   const filteredProjects = projects.filter((project) => {
     const matchesFilter =
@@ -46,15 +63,23 @@ const Dashboard = () => {
             </div>
           </div>
 
-            <NewProjectRequestModal
-        isOpen={isProjectModalOpen}
-        setIsOpen={setIsProjectModalOpen}
-      />
+          <NewProjectRequestModal
+            isOpen={isProjectModalOpen}
+            setIsOpen={setIsProjectModalOpen}
+          />
+
+          <ProjectDetailPopUp
+            isOpen={isProjectDetailOpen}
+            onClose={handleCloseProject}
+            project={selectedProject}
+          />
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <StatCard key={index} {...stat} />
             ))}
           </div>
+
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <h2 className="text-2xl font-semibold font-onest text-accent">
@@ -78,18 +103,19 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="relative w-full lg:w-80 bg-white  rounded-2xl">
-                <Search className="absolute left-3 top-1/2  -translate-y-1/2 w-4 h-4 text-accent" />
+              <div className="relative w-full lg:w-80 bg-white rounded-2xl">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                 <Input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10  h-10 bg-white border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
+                  className="pl-10 h-10 bg-white border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
                 />
               </div>
             </div>
 
+         
             <div className="hidden lg:block bg-tertiary rounded-2xl overflow-hidden">
               <table className="w-full">
                 <thead>
@@ -111,6 +137,7 @@ const Dashboard = () => {
                     </th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {filteredProjects.map((project) => (
                     <tr
@@ -130,18 +157,31 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </td>
+
                       <td className="p-4 text-accent/70">{project.platform}</td>
+
                       <td className="p-4">
                         <StatusBadge status={project.status} />
                       </td>
+
                       <td className="p-4 text-accent/70">
                         {project.lastUpdated}
                       </td>
+
                       <td className="p-4">
                         <div className="flex items-center justify-end gap-2">
-                          <ActionButton icon={Edit} label="Edit" />
+                         
+                          <ActionButton
+                            icon={Edit}
+                            label="Edit"
+                            onClick={() => handleOpenProject(project)}
+                          />
                           <ActionButton icon={Download} label="Download" />
-                          <ActionButton icon={MessageCircle} label="Comments" />
+                          <ActionButton
+                            icon={MessageCircle}
+                            label="Comments"
+                            onClick={() => handleOpenProject(project)}
+                          />
                         </div>
                       </td>
                     </tr>
@@ -150,6 +190,7 @@ const Dashboard = () => {
               </table>
             </div>
 
+           
             <div className="lg:hidden space-y-4">
               {filteredProjects.map((project) => (
                 <div
@@ -181,9 +222,17 @@ const Dashboard = () => {
                   </div>
 
                   <div className="flex items-center gap-2 pt-2">
-                    <ActionButton icon={Edit} label="Edit" />
+                    <ActionButton
+                      icon={Edit}
+                      label="Edit"
+                      onClick={() => handleOpenProject(project)}
+                    />
                     <ActionButton icon={Download} label="Download" />
-                    <ActionButton icon={MessageCircle} label="Comments" />
+                    <ActionButton
+                      icon={MessageCircle}
+                      label="Comments"
+                      onClick={() => handleOpenProject(project)}
+                    />
                   </div>
                 </div>
               ))}

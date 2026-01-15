@@ -1,3 +1,4 @@
+"use client"
 import { Badge,Circle } from "lucide-react";
 
 export const StatusBadge = ({ status }) => {

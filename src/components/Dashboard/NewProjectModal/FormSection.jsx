@@ -1,3 +1,4 @@
+"use client"
 import { Label } from "@/components/ui/label";
 export const FormSection = ({ title, children, className = "" }) => (
   <div className={`space-y-4 ${className}`}>

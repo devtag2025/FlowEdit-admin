@@ -1,3 +1,4 @@
+"use client"
 import { TrendingUp } from "lucide-react";
 const StatCard = ({ icon: Icon, title, percentage, subtitle, progress, trend }) => (
   <div className="bg-tertiary rounded-2xl p-6 space-y-4">

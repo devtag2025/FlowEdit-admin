@@ -1,3 +1,4 @@
+"use client"
 const FilterButton = ({ active, onClick, children }) => (
   <button
     onClick={onClick}

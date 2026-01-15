@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { X, Upload, Plus, Trash2 } from "lucide-react";
