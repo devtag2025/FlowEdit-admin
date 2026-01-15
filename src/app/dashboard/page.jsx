@@ -9,13 +9,19 @@ import { StatusBadge, ActionButton } from "@/components/Dashboard/StatusBadge";
 import FilterButton from "@/components/Dashboard/FilterButton";
 import NewProjectRequestModal from "@/components/Dashboard/NewProjectModal/Modal";
 import ProjectDetailPopUp from "@/components/Dashboard/ProjectPopUp/ProjectDetailPopUp";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Dashboard = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
-  // ✅ NEW: popup state
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -27,8 +33,10 @@ const Dashboard = () => {
   const handleCloseProject = () => {
     setIsProjectDetailOpen(false);
     // optional: clear selection after close
-    // setSelectedProject(null);
-  };
+    // setSelectedProject(null);import {
+
+} 
+  
 
   const filteredProjects = projects.filter((project) => {
     const matchesFilter =
@@ -89,32 +97,74 @@ const Dashboard = () => {
 
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
               <div className="relative w-full overflow-hidden ">
-               <div className="w-full">
-                <div className="lg:hidden w-full">
-                  <select
-                    value={activeFilter}
-                    onChange={(e) => setActiveFilter(e.target.value)}
-                    className="w-full h-10 rounded-xl border border-accent/20 bg-white px-4 text-sm font-medium text-accent focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    {filters.map((filter) => (
-                      <option key={filter} value={filter}>
-                        {filter}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="hidden lg:flex gap-2 flex-wrap">
-                  {filters.map((filter) => (
-                    <FilterButton
-                      key={filter}
-                      active={activeFilter === filter}
-                      onClick={() => setActiveFilter(filter)}
+                <div className="w-full">
+                  <div className="lg:hidden w-full">
+                    <Select
+                      value={activeFilter}
+                      onValueChange={setActiveFilter}
                     >
-                      {filter}
-                    </FilterButton>
-                  ))}
+                      <SelectTrigger
+                        className="
+        h-11 w-full
+        rounded-xl
+        border border-accent/20
+        bg-white!
+        text-sm font-semibold text-accent
+
+        transition-all
+        hover:border-primary/50
+        hover:bg-accent/5
+
+        focus:ring-2
+        focus:ring-primary/40
+        focus:border-primary
+      "
+                      >
+                        <SelectValue placeholder="Select filter" />
+                      </SelectTrigger>
+
+                      <SelectContent
+                        className="
+        rounded-xl
+        border border-accent/20
+        bg-white
+        shadow-lg
+      "
+                      >
+                        {filters.map((filter) => (
+                          <SelectItem
+                            key={filter}
+                            value={filter}
+                            className="
+            cursor-pointer
+            text-sm font-medium text-accent
+
+            focus:bg-primary/10
+            focus:text-accent
+
+            data-[state=checked]:bg-primary/15
+            data-[state=checked]:font-semibold
+          "
+                          >
+                            {filter}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="hidden lg:flex gap-2 flex-wrap">
+                    {filters.map((filter) => (
+                      <FilterButton
+                        key={filter}
+                        active={activeFilter === filter}
+                        onClick={() => setActiveFilter(filter)}
+                      >
+                        {filter}
+                      </FilterButton>
+                    ))}
+                  </div>
                 </div>
-              </div>
               </div>
 
               <div className="relative w-full lg:w-80 bg-white rounded-2xl">
@@ -129,7 +179,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-         
             <div className="hidden lg:block bg-tertiary rounded-2xl overflow-hidden">
               <table className="w-full">
                 <thead>
@@ -184,7 +233,6 @@ const Dashboard = () => {
 
                       <td className="p-4">
                         <div className="flex items-center justify-end gap-2">
-                         
                           <ActionButton
                             icon={Edit}
                             label="Edit"
@@ -204,7 +252,6 @@ const Dashboard = () => {
               </table>
             </div>
 
-           
             <div className="lg:hidden space-y-4">
               {filteredProjects.map((project) => (
                 <div
