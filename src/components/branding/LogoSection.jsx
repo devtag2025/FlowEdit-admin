@@ -13,24 +13,24 @@ const LogoSection = () => {
             Logos
           </h3>
 
-          <p className="font-medium text-slate-600 text-sm md:text-base">
+          <p className="font-medium text-slate-600 text-xs md:text-base">
             Upload your logo files in all orientations. These are your primary
             all-purpose visuals.
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
           {logos.map((logo) => (
             <div
-              className="border-slate-300 border-dashed border-2 rounded-xl bg-white py-8 px-10  md:px-20 md:py-18 hover:border-primary transition"
+              className="border-slate-300 border-dashed border md:border-2 rounded-lg md:rounded-xl bg-white py-8 px-10 md:px-20 md:py-18 hover:border-primary transition"
               key={logo}
             >
               <div className="flex flex-col items-center justify-center gap-3">
-                <Image size={35} className="text-slate-400" />
-                <h5 className="text-accent font-semibold md:text-xl text-lg">
+                <Image className="text-slate-400 md:h-8 w-8" />
+                <h5 className="text-accent font-semibold md:text-xl text-base">
                   {logo}
                 </h5>
-                <Button className="text-slate-600 font-medium text-lg">
+                <Button className="text-slate-600 font-medium">
                   Click to upload
                 </Button>
               </div>

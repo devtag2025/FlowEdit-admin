@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import BrandVoiceSection from "@/components/branding/BrandVoiceSection";
 import ColorSection from "@/components/branding/ColorSection";
 import FontSection from "@/components/branding/FontSection";

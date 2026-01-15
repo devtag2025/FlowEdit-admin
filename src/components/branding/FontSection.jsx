@@ -23,7 +23,7 @@ const FontSection = () => {
             Fonts
           </h3>
 
-          <p className="font-medium text-slate-600 text-sm md:text-base">
+          <p className="font-medium text-slate-600 text-xs md:text-base">
             Choose your preferred display and body fonts for titles, captions,
             and content.
           </p>

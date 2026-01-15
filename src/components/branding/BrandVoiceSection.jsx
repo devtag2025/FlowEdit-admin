@@ -10,7 +10,7 @@ const BrandVoiceSection = () => {
             Brand Voice
           </h3>
 
-          <p className="font-medium text-slate-600 text-sm md:text-base">
+          <p className="font-medium text-slate-600 text-xs md:text-base">
             Describe your brand voice, style, or messaging preferences for
             consistent storytelling.
           </p>

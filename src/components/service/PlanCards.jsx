@@ -1,7 +1,5 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import PlanCard from "./PlanCard";
 
 const PlanCards = () => {
@@ -52,36 +50,19 @@ const PlanCards = () => {
   return (
     <>
       <section className="text-center my-10">
-        <h2 className="text-accent text-2xl font-semibold mb-2">
+        <h2 className="text-accent text-xl font-bold md:text-2xl md:font-semibold mb-2">
           Simple, transparent pricing
         </h2>
-        <p className="text-accent md:text-slate-600">
+        <p className="text-accent text-sm md:text-base md:text-slate-600">
           Choose the plan that best fits your content needs. All plans include
           professional editing and fast delivery.
         </p>
       </section>
 
-      {/* Desktop */}
-      <div className="hidden md:grid md:grid-cols-3 gap-4 max-w-5xl mx-auto my-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto my-6">
         {plans.map((plan) => (
           <PlanCard key={plan.title} plan={plan} />
         ))}
-      </div>
-
-      {/* Mobile */}
-      <div className="md:hidden">
-        <Swiper
-          slidesPerView={1.15}
-          centeredSlides
-          spaceBetween={16}
-          initialSlide={plans.findIndex((p) => p.highlighted) || 0}
-        >
-          {plans.map((plan) => (
-            <SwiperSlide key={plan.title}>
-              <PlanCard plan={plan} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
       </div>
     </>
   );
