@@ -15,11 +15,13 @@ import {
   NotebookIcon,
   PencilRuler,
   Share2,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(3);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -48,6 +50,11 @@ export default function DashboardLayout({ children }) {
       name: "Social",
       href: "/dashboard/social",
       icon: Share2,
+    },
+    {
+      name: "Service",
+      href: "/dashboard/service",
+      icon: BriefcaseBusiness,
     },
   ];
 
@@ -220,16 +227,28 @@ export default function DashboardLayout({ children }) {
               >
                 <Menu className="w-5 h-5 text-accent" />
               </button>
-
             </div>
 
             <div className="flex items-center gap-2 lg:gap-3">
-              <button
-                className=" sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
-                aria-label="Notifications"
-              >
-                <Bell className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
-              </button>
+              <Link href="/dashboard/notification">
+                <button
+                  className="relative sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full 
+  hover:bg-purple-500/20 transition-colors active:scale-95"
+                  aria-label="Notifications"
+                >
+                  <Bell className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
+
+                  {unreadCount > 0 && (
+                    <span
+                      className={`absolute -top-1 -right-1 flex items-center justify-center text-[10px] ${
+                        unreadCount > 9 ? "min-w-5 h-5 " : "min-w-4.5 h-4.5"
+                      } font-bold text-white bg-red-500 rounded-full`}
+                    >
+                      {unreadCount}
+                    </span>
+                  )}
+                </button>
+              </Link>
 
               <Link href="/dashboard/profile">
                 <button
@@ -241,7 +260,7 @@ export default function DashboardLayout({ children }) {
               </Link>
 
               <div className="relative flex items-center gap-2 px-1 py-1 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95">
-                <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-gradient-to-br from-purple-600 to-purple-400 flex-shrink-0">
+                <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-linear-to-br from-purple-600 to-purple-400 shrink-0">
                   <Image
                     src="https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg"
                     alt="Avatar"

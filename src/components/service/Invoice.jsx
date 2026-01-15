@@ -34,18 +34,18 @@ const invoices = [
 
 const Invoice = () => {
   return (
-    <section className="max-w-5xl mx-auto overflow-hidden rounded-3xl">
-      <div className="flex flex-col items-center gap-2 p-2 md:flex-row md:items-center md:justify-between md:p-8 md:bg-tertiary">
+    <section className="max-w-5xl mx-auto overflow-hidden md:rounded-3xl">
+      <div className="flex flex-col items-center md:gap-2 p-2 md:flex-row md:items-center md:justify-between md:p-8 md:bg-tertiary">
         <div>
-          <h2 className="text-center md:text-left text-accent text-2xl font-semibold mb-2">
+          <h2 className="text-center md:text-left text-accent text-xl font-bold md:text-2xl md:font-semibold mb-2">
             Billing History
           </h2>
-          <p className="text-slate-600 text-center md:text-left">
+          <p className="text-slate-600 text-sm md:text-base text-center md:text-left">
             Download previous invoices and receipts.
           </p>
         </div>
 
-        <Button className="hidden md:flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow text-sm font-medium text-accent">
+        <Button className="hidden md:flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow text-sm font-medium text-accent hover:bg-gray-300">
           <Download size={16} />
           Download All
         </Button>
@@ -83,7 +83,7 @@ const Invoice = () => {
             </span>
 
             <div className="flex">
-              <Button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-300">
+              <Button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-300 hover:bg-white">
                 <Download size={16} className="text-accent" />
               </Button>
             </div>
@@ -92,11 +92,11 @@ const Invoice = () => {
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden p-1 space-y-3">
+      <div className="md:hidden space-y-3">
         {invoices.map((invoice) => (
           <div
             key={invoice.id}
-            className="bg-tertiary rounded-2xl p-4 shadow-sm flex flex-col gap-4"
+            className="bg-tertiary rounded-lg p-3 shadow-sm flex flex-col gap-3"
           >
             <div className="flex justify-between gap-3">
               <div className="flex items-center text-accent gap-2">
