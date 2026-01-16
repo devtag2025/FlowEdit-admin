@@ -1,14 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Plus, Search, Edit, Download, MessageCircle,Users,Eye,MoreVertical } from "lucide-react";
+import { Search, Edit, Download, MessageCircle,Users,Eye,MoreVertical } from "lucide-react";
 import { stats, filters, projects } from "@/utils/dashboard";
 import StatCard from "@/components/Dashboard/StatCard";
 import { Input } from "@/components/ui/input";
 import { StatusBadge, ActionButton } from "@/components/Dashboard/StatusBadge";
 import FilterButton from "@/components/Dashboard/FilterButton";
-import NewProjectRequestModal from "@/components/Dashboard/NewProjectModal/Modal";
-import ProjectDetailPopUp from "@/components/Dashboard/ProjectPopUp/ProjectDetailPopUp";
 import {
   Select,
   SelectContent,
@@ -20,24 +17,7 @@ import {
 const Dashboard = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-
-  const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
-
-  const handleOpenProject = (project) => {
-    setSelectedProject(project);
-    setIsProjectDetailOpen(true);
-  };
-
-  const handleCloseProject = () => {
-    setIsProjectDetailOpen(false);
-    // optional: clear selection after close
-    // setSelectedProject(null);import {
-
-} 
   
-
   const filteredProjects = projects.filter((project) => {
     const matchesFilter =
       activeFilter === "All" || project.status === activeFilter;
