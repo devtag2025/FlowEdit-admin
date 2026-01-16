@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Edit, Download, MessageCircle } from "lucide-react";
+import { Plus, Search, Edit, Download, MessageCircle,Users,Eye,MoreVertical } from "lucide-react";
 import { stats, filters, projects } from "@/utils/dashboard";
 import StatCard from "@/components/Dashboard/StatCard";
 import { Input } from "@/components/ui/input";
@@ -54,35 +54,15 @@ const Dashboard = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">
-                Good Evening, Marcus
+                Admin Dashboard
               </h1>
-              <p className="text-sm sm:text-base text-accent/70 font-onest font-bold">
-                Track your videos, revisions and progress
-              </p>
+          
             </div>
-            <div>
-              <Button
-                onClick={() => setIsProjectModalOpen(true)}
-                className="flex items-center justify-center gap-2 w-auto sm:w-auto bg-primary text-white px-7 sm:px-6 h-10 sm:h-11 rounded-xl text-sm sm:text-base font-semibold font-onest"
-              >
-                <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                New Project
-              </Button>
-            </div>
+    
           </div>
 
-          <NewProjectRequestModal
-            isOpen={isProjectModalOpen}
-            setIsOpen={setIsProjectModalOpen}
-          />
 
-          <ProjectDetailPopUp
-            isOpen={isProjectDetailOpen}
-            onClose={handleCloseProject}
-            project={selectedProject}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <StatCard key={index} {...stat} />
             ))}
@@ -187,13 +167,13 @@ const Dashboard = () => {
                       Project Name
                     </th>
                     <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
-                      Platform
-                    </th>
-                    <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
                       Status
                     </th>
                     <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
                       Last Updated
+                    </th>
+                      <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                      Assigned Contractors
                     </th>
                     <th className="text-right p-4 text-accent/70 font-semibold uppercase text-xs">
                       Actions
@@ -201,54 +181,55 @@ const Dashboard = () => {
                   </tr>
                 </thead>
 
-                <tbody>
-                  {filteredProjects.map((project) => (
-                    <tr
-                      key={project.id}
-                      className="border-b border-accent/10 hover:bg-accent/5 transition-colors"
-                    >
-                      <td className="p-4">
-                        <div className="space-y-2">
-                          <p className="font-semibold text-accent">
-                            {project.name}
-                          </p>
-                          <div className="w-32 h-1 bg-accent/10 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-primary rounded-full transition-all duration-500"
-                              style={{ width: `${project.progress}%` }}
-                            />
-                          </div>
-                        </div>
-                      </td>
+            <tbody>
+  {filteredProjects.map((project) => (
+    <tr
+      key={project.id}
+      className="border-b border-accent/10 hover:bg-accent/5 transition-colors"
+    >
 
-                      <td className="p-4 text-accent/70">{project.platform}</td>
+      <td className="p-4">
+        <div className="space-y-2">
+          <p className="font-semibold text-accent">
+            {project.name}
+          </p>
 
-                      <td className="p-4">
-                        <StatusBadge status={project.status} />
-                      </td>
+     </div>
+      </td>
 
-                      <td className="p-4 text-accent/70">
-                        {project.lastUpdated}
-                      </td>
 
-                      <td className="p-4">
-                        <div className="flex items-center justify-end gap-2">
-                          <ActionButton
-                            icon={Edit}
-                            label="Edit"
-                            onClick={() => handleOpenProject(project)}
-                          />
-                          <ActionButton icon={Download} label="Download" />
-                          <ActionButton
-                            icon={MessageCircle}
-                            label="Comments"
-                            onClick={() => handleOpenProject(project)}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+      <td className="p-4">
+        <StatusBadge status={project.status} />
+      </td>
+
+      <td className="p-4 text-accent/70">
+        {project.lastUpdated}
+      </td>
+
+      <td className="p-4">
+        <div className="flex items-center gap-3">
+          <img
+            src={project.contractor.avatar}
+            alt={project.contractor.name}
+            className="w-8 h-8 rounded-full object-cover"
+          />
+          <span className="text-accent/80 text-sm">
+            {project.contractor.name}
+          </span>
+        </div>
+      </td>
+
+      <td className="p-4">
+        <div className="flex items-center justify-end gap-2">
+          <ActionButton icon={Users} label="Assign" />
+          <ActionButton icon={Eye} label="View" />
+          <ActionButton icon={MoreVertical} label="More" />
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
               </table>
             </div>
 

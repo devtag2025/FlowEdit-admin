@@ -17,6 +17,9 @@ import {
   Share2,
   BriefcaseBusiness,
 } from "lucide-react";
+import { RadioIcon } from "lucide-react";
+import { UserRoundIcon } from "lucide-react";
+import { UsersRound } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -32,30 +35,21 @@ export default function DashboardLayout({ children }) {
       icon: LayoutDashboard,
     },
     {
-      name: "Projects",
-      href: "/dashboard/projects",
-      icon: NotebookIcon,
+      name: "Broadcasts",
+      href: "/dashboard/broadcasts",
+      icon: RadioIcon,
     },
-    {
-      name: "Notification",
-      href: "/dashboard/notification",
-      icon: Bell,
+        {
+      name: "Clients",
+      href: "/dashboard/clients",
+      icon: UserRoundIcon,
     },
-    {
-      name: "Branding",
-      href: "/dashboard/branding",
-      icon: PencilRuler,
+        {
+      name: "Contractors",
+      href: "/dashboard/contractors",
+      icon: UsersRound,
     },
-    {
-      name: "Social",
-      href: "/dashboard/social",
-      icon: Share2,
-    },
-    {
-      name: "Service",
-      href: "/dashboard/service",
-      icon: BriefcaseBusiness,
-    },
+   
   ];
 
   const isActive = (href) => {
