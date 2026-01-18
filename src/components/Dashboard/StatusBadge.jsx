@@ -25,7 +25,7 @@ const styles = {
 export const ActionButton = ({ icon: Icon, onClick, label }) => (
   <button
     onClick={onClick}
-    className="w-9 h-9 flex items-center justify-center rounded-lg bg-white hover:bg-accent/5 border border-accent/10 transition-colors"
+    className="w-9 h-9 flex items-center justify-center rounded-lg bg-tertiary hover:bg-accent/5 border border-accent/10 transition-colors"
     aria-label={label}
   >
     <Icon className="w-4 h-4 text-accent" />

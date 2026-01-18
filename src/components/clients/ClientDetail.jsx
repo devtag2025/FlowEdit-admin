@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const ClientDetail = ({ client, onBack, isMobile }) => {
   if (isMobile) {
     return (
-      <div className="bg-white rounded-t-3xl p-4 pb-6 space-y-3">
+      <div className="bg-tertiary rounded-t-3xl p-4 pb-6 space-y-3">
 
         <div className="flex justify-center -mt-2 mb-1">
           <div className="w-12 h-1 bg-gray-300 rounded-full" />
@@ -118,7 +118,7 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl p-6">
+        <div className="bg-tertiary rounded-2xl p-6">
           <div className="flex items-center gap-2 text-accent/60 text-sm mb-2">
             <Tag className="w-4 h-4" />
             <span>Plan</span>
@@ -127,7 +127,7 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
           <p className="text-xs text-accent/60">{client.memberSince}</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6">
+        <div className="bg-tertiary rounded-2xl p-6">
           <div className="flex items-center gap-2 text-accent/60 text-sm mb-2">
             <Briefcase className="w-4 h-4" />
             <span>Active projects</span>
@@ -136,7 +136,7 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
           <p className="text-xs text-accent/60">Current workload</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6">
+        <div className="bg-tertiary rounded-2xl p-6">
           <div className="flex items-center gap-2 text-accent/60 text-sm mb-2">
             <Clock className="w-4 h-4" />
             <span>Tenure</span>

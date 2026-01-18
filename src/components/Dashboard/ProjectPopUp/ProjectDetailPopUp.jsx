@@ -116,7 +116,7 @@ function ProjectDetailPopUp({ isOpen, onClose, project }) {
         <div className="aspect-video bg-accent rounded-2xl flex items-center justify-center relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/80 to-accent/60" />
           <div className="relative z-10 text-center">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center mb-3 mx-auto cursor-pointer hover:scale-110 transition-transform">
+            <div className="w-16 h-16 bg-tertiary/20 backdrop-blur rounded-full flex items-center justify-center mb-3 mx-auto cursor-pointer hover:scale-110 transition-transform">
               <Play className="w-8 h-8 text-white ml-1" />
             </div>
             <p className="text-white/80 text-sm">Video preview coming soon</p>
@@ -143,7 +143,7 @@ function ProjectDetailPopUp({ isOpen, onClose, project }) {
             </Button>
           </div>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-accent/10">
+        <div className="bg-tertiary rounded-xl p-4 border border-accent/10">
           <div className="flex items-center gap-2 mb-2">
             <CheckCircle className="w-4 h-4 text-accent" />
             <h4 className="text-sm font-semibold text-accent">
@@ -209,7 +209,7 @@ function ProjectDetailPopUp({ isOpen, onClose, project }) {
               placeholder="Reply..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="bg-white border-accent/20 text-accent placeholder:text-accent/40 focus:border-primary focus:ring-primary py-5 pr-20 rounded-3xl"
+              className="bg-tertiary border-accent/20 text-accent placeholder:text-accent/40 focus:border-primary focus:ring-primary py-5 pr-20 rounded-3xl"
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
               <button

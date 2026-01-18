@@ -5,7 +5,7 @@ const FilterButton = ({ active, onClick, children }) => (
     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
       active
         ? 'bg-primary text-white font-medium font-onest shadow-md'
-        : 'bg-white font-medium text-accent font-onest hover:bg-accent/5'
+        : 'bg-tertiary font-medium text-accent font-onest hover:bg-accent/5'
     }`}
   >
     {children}

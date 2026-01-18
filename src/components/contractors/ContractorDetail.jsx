@@ -90,7 +90,7 @@ const ContractorDetail = ({ contractor, onBack, isMobile }) => {
                     className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mb-1 ${
                       step.completed
                         ? 'bg-primary text-white'
-                        : 'bg-white border-2 border-gray-300 text-accent'
+                        : 'bg-tertiary border-2 border-gray-300 text-accent'
                     }`}
                   >
                     {step.completed ? '✓' : step.id}

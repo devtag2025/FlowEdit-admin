@@ -60,7 +60,7 @@ export default function Page() {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     activeFilter === filter
                       ? 'bg-primary text-white shadow-md'
-                      : 'bg-white text-accent hover:bg-accent/5'
+                      : 'bg-tertiary text-accent hover:bg-accent/5'
                   }`}
                 >
                   {filter}
@@ -68,14 +68,14 @@ export default function Page() {
               ))}
             </div>
 
-            <div className="relative w-full lg:w-80 bg-white rounded-2xl">
+            <div className="relative w-full lg:w-80 bg-tertiary rounded-2xl">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
               <Input
                 type="text"
                 placeholder="Search Clients"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-10 bg-white border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
+                className="pl-10 h-10 bg-tertiary border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
               />
             </div>
           </div>
@@ -122,16 +122,16 @@ export default function Page() {
                 <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => handleClientSelect(client)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-tertiary rounded-lg text-accent hover:bg-accent/5 transition-colors"
                   >
                     <Eye className="w-4 h-4" />
                     <span className="text-sm font-medium">View</span>
                   </button>
-                  <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors">
+                  <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-tertiary rounded-lg text-accent hover:bg-accent/5 transition-colors">
                     <MessageSquare className="w-4 h-4" />
                     <span className="text-sm font-medium">Message</span>
                   </button>
-                  <button className="px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors">
+                  <button className="px-4 py-2 bg-tertiary rounded-lg text-accent hover:bg-accent/5 transition-colors">
                     <MoreVertical className="w-4 h-4" />
                   </button>
                 </div>
@@ -223,7 +223,7 @@ export default function Page() {
 
       <div
         className={`
-          lg:hidden fixed inset-x-0 bottom-0 z-40 bg-white border-t border-gray-200 rounded-t-3xl
+          lg:hidden fixed inset-x-0 bottom-0 z-40 bg-tertiary border-t border-gray-200 rounded-t-3xl
           transition-transform duration-300 ease-out shadow-2xl
           ${mobileDetailOpen ? "translate-y-0" : "translate-y-full"}
         `}

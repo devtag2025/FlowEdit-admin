@@ -130,8 +130,8 @@ export default function FlowEditLandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-accent/10">
+    <div className="min-h-screen bg-tertiary">
+      <nav className="sticky top-0 z-50 bg-tertiary/95 backdrop-blur-lg border-b border-accent/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             <div className="flex items-center">
@@ -181,7 +181,7 @@ export default function FlowEditLandingPage() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-accent/10">
+          <div className="md:hidden bg-tertiary border-t border-accent/10">
             <div className="px-4 py-4 space-y-4">
               <a
                 href="#features"
@@ -276,7 +276,7 @@ export default function FlowEditLandingPage() {
                 </div>
               </div>
 
-              <div className="hidden lg:block absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg border border-accent/10">
+              <div className="hidden lg:block absolute -bottom-6 -right-6 bg-tertiary p-6 rounded-xl shadow-lg border border-accent/10">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <FileVideo className="w-6 h-6 text-primary" />
@@ -307,7 +307,7 @@ export default function FlowEditLandingPage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl hover:shadow-lg transition-all duration-300 border border-accent/10"
+                className="bg-tertiary p-8 rounded-xl hover:shadow-lg transition-all duration-300 border border-accent/10"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
                   <feature.icon className="w-6 h-6 text-primary" />
@@ -340,7 +340,7 @@ export default function FlowEditLandingPage() {
             {pricingPlans.map((plan, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-2xl p-8 border-2 transition-all duration-300 ${
+                className={`bg-tertiary rounded-2xl p-8 border-2 transition-all duration-300 ${
                   plan.popular
                     ? "border-primary shadow-xl scale-105"
                     : "border-accent/10 hover:border-primary/30 hover:shadow-lg"
@@ -365,7 +365,7 @@ export default function FlowEditLandingPage() {
                   className={`w-full py-6 rounded-xl text-base font-semibold ${
                     plan.popular
                       ? "bg-primary hover:bg-primary/90 text-white"
-                      : "bg-white hover:bg-accent/5 text-accent border-2 border-accent/20"
+                      : "bg-tertiary hover:bg-accent/5 text-accent border-2 border-accent/20"
                   }`}
                 >
                   Get Started
@@ -399,7 +399,7 @@ export default function FlowEditLandingPage() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl border border-accent/10 hover:shadow-lg transition-all"
+                className="bg-tertiary p-8 rounded-xl border border-accent/10 hover:shadow-lg transition-all"
               >
                 <div className="flex gap-1 mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -453,7 +453,7 @@ export default function FlowEditLandingPage() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 h-14 bg-white text-accent border-0 focus:ring-2 focus:ring-white"
+              className="flex-1 h-14 bg-tertiary text-accent border-0 focus:ring-2 focus:ring-white"
             />
             <Button
               onClick={handleSubmit}
@@ -467,7 +467,7 @@ export default function FlowEditLandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-accent/10 py-12">
+      <footer className="bg-tertiary border-t border-accent/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div>

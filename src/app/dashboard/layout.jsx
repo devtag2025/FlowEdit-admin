@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }) {
 
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-white/10 relative left-12 bottom-8 transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-tertiary/10 relative left-12 bottom-8 transition-colors"
               aria-label="Close sidebar"
             >
               <X className="w-5 h-5 text-white" />
@@ -110,9 +110,9 @@ export default function DashboardLayout({ children }) {
         `
         : `
           text-accent
-          hover:bg-white/30
+          hover:bg-tertiary/30
           hover:shadow-md hover:shadow-purple-500/10
-          active:bg-white/10
+          active:bg-tertiary/10
         `
     }
   `}
@@ -149,8 +149,8 @@ export default function DashboardLayout({ children }) {
               disabled={isLoading}
               onClick={onLogout}
               className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl 
-                hover:bg-white/5 border border-transparent hover:border-purple-500/30 
-                transition-all duration-300 group text-left active:bg-white/10
+                hover:bg-tertiary/5 border border-transparent hover:border-purple-500/30 
+                transition-all duration-300 group text-left active:bg-tertiary/10
                 ${
                   isLoading
                     ? "opacity-70 cursor-not-allowed"
@@ -178,11 +178,11 @@ export default function DashboardLayout({ children }) {
           </nav>
 
           <div className="p-4 border-t border-white/10">
-            <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-tertiary">
-              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:bg-white lg:text-accent lg:shadow-lg hidden lg:block">
+            <div className="flex items-center gap-1 p-1 rounded-full bg-tertiary/5 border border-tertiary">
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:bg-tertiary lg:text-accent lg:shadow-lg hidden lg:block">
                 Desktop
               </button>
-              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:text-tertiary lg:hover:text-white lg:hidden bg-white text-accent shadow-lg">
+              <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 lg:text-tertiary lg:hover:text-white lg:hidden bg-tertiary text-accent shadow-lg">
                 Mobile
               </button>
               <button className="flex-1 px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-300 text-tertiary hover:text-white hidden lg:block">

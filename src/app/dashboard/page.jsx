@@ -68,7 +68,7 @@ const Dashboard = () => {
         h-11 w-full
         rounded-xl
         border border-accent/20
-        bg-white!
+        bg-tertiary!
         text-sm font-semibold text-accent
 
         transition-all
@@ -87,7 +87,7 @@ const Dashboard = () => {
                         className="
         rounded-xl
         border border-accent/20
-        bg-white
+        bg-tertiary
         shadow-lg
       "
                       >
@@ -127,14 +127,14 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="relative w-full lg:w-80 bg-white rounded-2xl">
+              <div className="relative w-full lg:w-80 bg-tertiary rounded-2xl">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
                 <Input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-10 bg-white border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
+                  className="pl-10 h-10 bg-tertiary border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
                 />
               </div>
             </div>
