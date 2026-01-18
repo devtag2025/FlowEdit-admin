@@ -3,7 +3,7 @@ import { useState } from "react";
 import EmptyClientDetail from "@/components/clients/EmptyClient";
 import ClientDetail from "@/components/clients/ClientDetail";
 import { clients, filters } from "@/utils/clientpage";
-import { Search, Eye, MessageSquare, MoreVertical } from "lucide-react";
+import { Search, Eye, MessageSquare, MoreVertical, ChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ export default function Page() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClient, setSelectedClient] = useState(null);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
   const filteredClients = clients.filter((client) => {
     const matchesFilter = activeFilter === 'All' || 
@@ -26,10 +27,13 @@ export default function Page() {
 
   const handleClientSelect = (client) => {
     setSelectedClient(client);
+    // Open mobile detail sheet on mobile
+    setMobileDetailOpen(true);
   };
 
   const handleBackToList = () => {
     setSelectedClient(null);
+    setMobileDetailOpen(false);
   };
 
   return (
@@ -48,15 +52,7 @@ export default function Page() {
           )}
         </div>
 
-        {/* Mobile: Show ClientDetail only when client is selected */}
-        {selectedClient && (
-          <div className="lg:hidden">
-            <ClientDetail client={selectedClient} onBack={handleBackToList} />
-          </div>
-        )}
-
-        {/* Hide filters and list when client is selected on mobile */}
-        <div className={`${selectedClient ? 'hidden lg:block' : 'block'} space-y-4`}>
+        <div className="space-y-4">
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <div className="flex gap-2 flex-wrap">
               {filters.map((filter) => (
@@ -144,6 +140,13 @@ export default function Page() {
                 </div>
               </div>
             ))}
+
+            {filteredClients.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-16 bg-tertiary rounded-2xl">
+                <Search className="w-6 h-6 text-accent/50 mb-2" />
+                <p className="text-accent/60 text-sm">No clients found</p>
+              </div>
+            )}
           </div>
 
           {/* Desktop Table View */}
@@ -215,12 +218,51 @@ export default function Page() {
           </div>
 
           {filteredClients.length === 0 && (
-            <div className="bg-tertiary rounded-2xl p-12 text-center">
+            <div className="hidden lg:block bg-tertiary rounded-2xl p-12 text-center">
               <p className="text-accent/60">No clients found matching your criteria.</p>
             </div>
           )}
         </div>
       </div>
+
+      {/* Mobile Bottom Sheet Detail Panel */}
+      <div
+        className={`
+          lg:hidden fixed inset-x-0 bottom-0 z-40 bg-white border-t border-gray-200 rounded-t-3xl
+          transition-transform duration-300 ease-out shadow-2xl
+          ${mobileDetailOpen ? "translate-y-0" : "translate-y-full"}
+        `}
+        style={{ maxHeight: "80vh" }}
+      >
+        {/* Scrollable Content */}
+        <div className="h-full overflow-y-auto">
+          {selectedClient && (
+            <ClientDetail
+              client={selectedClient}
+              onBack={() => setMobileDetailOpen(false)}
+              isMobile={true}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {mobileDetailOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/60 z-30"
+          onClick={() => setMobileDetailOpen(false)}
+        />
+      )}
+
+      {/* Mobile FAB - Shows when client is selected but drawer is closed */}
+      {selectedClient && !mobileDetailOpen && (
+        <button
+          onClick={() => setMobileDetailOpen(true)}
+          className="lg:hidden fixed bottom-6 right-6 z-20 p-4 rounded-full bg-primary shadow-lg hover:bg-primary/90 transition-colors"
+        >
+          <ChevronUp className="w-5 h-5 text-white" />
+        </button>
+      )}
     </div>
   );
 }
