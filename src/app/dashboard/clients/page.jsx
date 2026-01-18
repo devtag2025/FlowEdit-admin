@@ -27,7 +27,6 @@ export default function Page() {
 
   const handleClientSelect = (client) => {
     setSelectedClient(client);
-    // Open mobile detail sheet on mobile
     setMobileDetailOpen(true);
   };
 
@@ -43,7 +42,6 @@ export default function Page() {
           <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-1">Clients</h1>
         </div>
 
-        {/* Desktop: Always show EmptyClientDetail or ClientDetail */}
         <div className="hidden lg:block">
           {selectedClient ? (
             <ClientDetail client={selectedClient} onBack={handleBackToList} />
@@ -82,7 +80,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Mobile Card View */}
           <div className="lg:hidden space-y-4">
             {filteredClients.map((client) => (
               <div
@@ -149,7 +146,6 @@ export default function Page() {
             )}
           </div>
 
-          {/* Desktop Table View */}
           <div className="hidden lg:block bg-tertiary rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
@@ -225,7 +221,6 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Mobile Bottom Sheet Detail Panel */}
       <div
         className={`
           lg:hidden fixed inset-x-0 bottom-0 z-40 bg-white border-t border-gray-200 rounded-t-3xl
@@ -234,7 +229,6 @@ export default function Page() {
         `}
         style={{ maxHeight: "80vh" }}
       >
-        {/* Scrollable Content */}
         <div className="h-full overflow-y-auto">
           {selectedClient && (
             <ClientDetail
@@ -246,7 +240,7 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Mobile Backdrop */}
+
       {mobileDetailOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/60 z-30"
@@ -254,7 +248,7 @@ export default function Page() {
         />
       )}
 
-      {/* Mobile FAB - Shows when client is selected but drawer is closed */}
+
       {selectedClient && !mobileDetailOpen && (
         <button
           onClick={() => setMobileDetailOpen(true)}

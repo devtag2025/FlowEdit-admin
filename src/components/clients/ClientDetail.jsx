@@ -5,15 +5,14 @@ import { Button } from "@/components/ui/button";
 
 const ClientDetail = ({ client, onBack, isMobile }) => {
   if (isMobile) {
-    // Mobile optimized view
     return (
       <div className="bg-white rounded-t-3xl p-4 pb-6 space-y-3">
-        {/* Header with close handle */}
+
         <div className="flex justify-center -mt-2 mb-1">
           <div className="w-12 h-1 bg-gray-300 rounded-full" />
         </div>
 
-        {/* Client Info Header */}
+
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <Avatar className={`w-12 h-12 ${client.avatarColor}`}>
@@ -31,9 +30,7 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
           </Badge>
         </div>
 
-        {/* Info Sections */}
         <div className="space-y-2.5">
-          {/* Plan */}
           <div className="bg-gray-50 rounded-xl p-3">
             <div className="flex items-center gap-2 text-gray-600 text-xs uppercase font-semibold mb-1.5">
               <Tag className="w-3.5 h-3.5" />
@@ -45,7 +42,7 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
             </div>
           </div>
 
-          {/* Active Projects */}
+
           <div className="bg-gray-50 rounded-xl p-3">
             <div className="flex items-center gap-2 text-gray-600 text-xs uppercase font-semibold mb-1.5">
               <Briefcase className="w-3.5 h-3.5" />
@@ -57,7 +54,6 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
             </div>
           </div>
 
-          {/* Tenure */}
           <div className="bg-gray-50 rounded-xl p-3">
             <div className="flex items-center gap-2 text-gray-600 text-xs uppercase font-semibold mb-1.5">
               <Clock className="w-3.5 h-3.5" />
@@ -70,7 +66,6 @@ const ClientDetail = ({ client, onBack, isMobile }) => {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="space-y-2 pt-1">
           <p className="text-xs font-semibold text-gray-600 uppercase">ACTIONS</p>
           
