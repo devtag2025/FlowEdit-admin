@@ -12,14 +12,10 @@ import {
   X,
   Loader2,
   Bell,
-  NotebookIcon,
-  PencilRuler,
-  Share2,
-  BriefcaseBusiness,
+  RadioIcon,
+  UserRoundIcon,
+  UsersRound,
 } from "lucide-react";
-import { RadioIcon } from "lucide-react";
-import { UserRoundIcon } from "lucide-react";
-import { UsersRound } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,17 +35,16 @@ export default function DashboardLayout({ children }) {
       href: "/dashboard/broadcasts",
       icon: RadioIcon,
     },
-        {
+    {
       name: "Clients",
       href: "/dashboard/clients",
       icon: UserRoundIcon,
     },
-        {
+    {
       name: "Contractors",
       href: "/dashboard/contractors",
       icon: UsersRound,
     },
-   
   ];
 
   const isActive = (href) => {
@@ -101,15 +96,15 @@ export default function DashboardLayout({ children }) {
               const active = isActive(item.href);
 
               return (
-            <Link
-  key={item.name}
-  href={item.href}
-  onClick={() => setIsSidebarOpen(false)}
-  className={`relative flex items-center gap-3 px-5 py-2 rounded-xl transition-all duration-300 group
-    ${
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={`relative flex items-center gap-3 px-5 py-2 rounded-xl transition-all duration-300 group
+                   ${
       active
         ? `
-          bg-linear-to-tr  from-purple-500/70 from-tertiary/90 to-secondary/50
+          bg-linear-to-tr  from-tertiary/90 to-secondary/50
           text-white
           shadow-lg shadow-primary/25
         `
@@ -121,21 +116,21 @@ export default function DashboardLayout({ children }) {
         `
     }
   `}
-  aria-current={active ? "page" : undefined}
->
+                  aria-current={active ? "page" : undefined}
+                >
                   <div
-  className={`group flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
-    active ? "bg-tertiary" : "bg-transparent"
-  }`}
->
-  <Icon
-    className={`w-5 h-5 transition-colors ${
-      active
-        ? "text-accent"
-        : "text-white/70 group-hover:text-tertiary/80"
-    }`}
-  />
-</div>
+                    className={`group flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
+                      active ? "bg-tertiary" : "bg-transparent"
+                    }`}
+                  >
+                    <Icon
+                      className={`w-5 h-5 transition-colors ${
+                        active
+                          ? "text-accent"
+                          : "text-white/70 group-hover:text-tertiary/80"
+                      }`}
+                    />
+                  </div>
 
                   <span
                     className={`font-medium ${
@@ -146,7 +141,6 @@ export default function DashboardLayout({ children }) {
                   >
                     {item.name}
                   </span>
-                 
                 </Link>
               );
             })}
@@ -245,14 +239,6 @@ export default function DashboardLayout({ children }) {
               </Link>
 
               <Link href="/dashboard/profile">
-                <button
-                  className="sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95"
-                  aria-label="Settings"
-                >
-                  <Settings className="text-accent w-4 h-4 lg:w-5 lg:h-5" />
-                </button>
-              </Link>
-
               <div className="relative flex items-center gap-2 px-1 py-1 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95">
                 <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-linear-to-br from-purple-600 to-purple-400 shrink-0">
                   <Image
@@ -267,6 +253,9 @@ export default function DashboardLayout({ children }) {
                   John Doe
                 </span>
               </div>
+              </Link>
+
+              
             </div>
           </div>
         </header>

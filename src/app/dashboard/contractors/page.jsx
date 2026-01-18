@@ -1,233 +1,308 @@
 "use client";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
+import EmptyContractorDetail from "@/components/contractors/EmptyContractor";
+import ContractorDetail from "@/components/contractors/ContractorDetail";
+import { contractors, filters } from "@/utils/contractorpage";
 import {
-  Play,
-  Share2,
-  Download,
-  Calendar,
-  ExternalLink,
-  Send,
-  AlertCircle,
+  Search,
+  Eye,
   MessageSquare,
-  Video,
+  MoreVertical,
+  ChevronUp,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ActionButton } from "@/components/Dashboard/StatusBadge";
 
-const page = () => {
-  const [note, setNote] = useState("");
+export default function ContractorsPage() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedContractor, setSelectedContractor] = useState(null);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
-  const project = {
-    title: "Summer Campaign Promo",
-    status: "Review",
-    date: "Oct 25, 2023",
-    description:
-      "Upbeat summer vibes, fast cuts, use the provided logo overlay.",
-    platform: "Instagram Reels",
-    sourceFiles: "https://drive.google.com/...",
+  const filteredContractors = contractors.filter((contractor) => {
+    const matchesFilter =
+      activeFilter === "All" ||
+      (activeFilter === "New" && contractor.status === "New") ||
+      (activeFilter === "Inactive" && contractor.status === "Inactive");
+    const matchesSearch =
+      contractor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contractor.email.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  const handleContractorSelect = (contractor) => {
+    setSelectedContractor(contractor);
+    setMobileDetailOpen(true);
   };
 
-  const messages = [
-    {
-      id: 1,
-      user: "Sarah",
-      role: "Editor",
-      time: "7:00 PM",
-      message: "First draft is ready for review!",
-      avatar:
-        "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
-    },
-    {
-      id: 2,
-      user: "Marcus",
-      role: null,
-      time: "7:35 PM",
-      message: "Looking good, just a few tweaks needed on the outro.",
-      avatar:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
-      isUser: true,
-    },
-  ];
-
-  const handleSendNote = () => {
-    if (note.trim()) {
-      alert(`Note sent: ${note}`);
-      setNote("");
-    }
+  const handleBackToList = () => {
+    setSelectedContractor(null);
+    setMobileDetailOpen(false);
   };
+
   return (
-    <div className="min-h-screen bg-secondary  md:p-8">
-      <Link href="/dashboard">
-        <div className="flex gap-2 items-center justify-start">
-          <ArrowLeft className="text-accent pb-2" />
-          <h1 className="text-md font-medium text-accent mb-2">
-            Back to Dashboard
+    <div className="min-h-screen bg-secondary p-4 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-1">
+            Contractors
           </h1>
         </div>
-      </Link>
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="grid lg:grid-cols-[1fr_500px] h-full ">
-          <div className="relative   ">
-            <img
-              src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg"
-              alt="Project preview"
-              className="w-full h-full object-cover rounded-l-3xl"
+
+        <div className="hidden lg:block">
+          {selectedContractor ? (
+            <ContractorDetail
+              contractor={selectedContractor}
+              onBack={handleBackToList}
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="w-20 h-20 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                <Play className="w-10 h-10 text-gray-700 ml-1 fill-gray-700" />
-              </button>
+          ) : (
+            <EmptyContractorDetail />
+          )}
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+            <div className="flex gap-2 flex-wrap">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    activeFilter === filter
+                      ? "bg-primary text-white shadow-md"
+                      : "bg-white text-accent hover:bg-accent/5"
+                  }`}
+                >
+                  {filter}
+                </button>
+              ))}
             </div>
 
-
-            <div className="absolute bottom-0 left-0 right-0 bg-accent/95 backdrop-blur p-6 flex items-center justify-between rounded-bl-3xl">
-              <h2 className="text-xl font-bold text-white">{project.title}</h2>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:bg-white/20 gap-2"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:bg-white/20 gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  Download
-                </Button>
-              </div>
+            <div className="relative w-full lg:w-80 bg-white rounded-2xl">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
+              <Input
+                type="text"
+                placeholder="Search Contractors"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-10 bg-white border-accent/10 text-accent placeholder:text-accent focus:border-primary focus:ring-primary"
+              />
             </div>
           </div>
 
-          <div className="bg-tertiary h-full overflow-y-auto flex flex-col rounded-r-3xl">
-            <div className="p-6 space-y-6 flex-1">
-              <div className="flex items-center justify-between">
-                <Badge className="bg-primary text-white border-0 font-semibold px-3 py-1">
-                  {project.status}
-                </Badge>
-                <div className="flex items-center gap-2 text-sm text-accent/60">
-                  <Calendar className="w-4 h-4" />
-                  {project.date}
+          <div className="lg:hidden space-y-4">
+            {filteredContractors.map((contractor) => (
+              <div
+                key={contractor.id}
+                onClick={() => handleContractorSelect(contractor)}
+                className="bg-tertiary rounded-2xl p-4 cursor-pointer hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar className={`w-12 h-12 ${contractor.avatarColor}`}>
+                      <AvatarFallback className="text-white font-bold">
+                        {contractor.initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold text-accent">
+                        {contractor.name}
+                      </p>
+                      <p className="text-sm text-accent/60">
+                        {contractor.email}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge
+                    className={`${contractor.statusColor} border-0 font-semibold`}
+                  >
+                    {contractor.status}
+                  </Badge>
                 </div>
-              </div>
 
-              <div>
-                <h1 className="text-3xl font-bold text-accent mb-4">
-                  {project.title}
-                </h1>
-                <p className="text-accent/70 text-base leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <Video className="w-4 h-4 text-accent/60" />
-                  <span className="text-accent/80">{project.platform}</span>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-accent/60 mb-1">Status</p>
+                    <p className="text-sm font-medium text-accent">
+                      {contractor.status}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-accent/60 mb-1">
+                      Active Projects
+                    </p>
+                    <p className="text-sm font-medium text-accent">
+                      {contractor.activeProjects}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-accent/60 mb-1">Last Activity</p>
+                    <p className="text-sm font-medium text-accent">
+                      {contractor.lastActivity}
+                    </p>
+                  </div>
                 </div>
-                <a
-                  href={project.sourceFiles}
-                  className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+
+                <div
+                  className="flex gap-2"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  Source Files
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
-
-              <div className="border-t border-accent/10 pt-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <MessageSquare className="w-5 h-5 text-accent" />
-                  <h3 className="font-bold text-accent text-lg">
-                    Notes & Activity
-                  </h3>
+                  <button
+                    onClick={() => handleContractorSelect(contractor)}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors"
+                  >
+                    <Eye className="w-4 h-4" />
+                    <span className="text-sm font-medium">View</span>
+                  </button>
+                  <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors">
+                    <MessageSquare className="w-4 h-4" />
+                    <span className="text-sm font-medium">Message</span>
+                  </button>
+                  <button className="px-4 py-2 bg-white rounded-lg text-accent hover:bg-accent/5 transition-colors">
+                    <MoreVertical className="w-4 h-4" />
+                  </button>
                 </div>
+              </div>
+            ))}
 
-                <div className="space-y-6 mb-6">
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`flex gap-3 ${
-                        msg.isUser ? "flex-row-reverse" : "flex-row"
-                      }`}
-                    >
-                      <Avatar className="w-10 h-10 flex-shrink-0">
-                        <AvatarImage src={msg.avatar} alt={msg.user} />
-                        <AvatarFallback className="bg-primary text-white">
-                          {msg.user.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
+            {filteredContractors.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-16 bg-tertiary rounded-2xl">
+                <Search className="w-6 h-6 text-accent/50 mb-2" />
+                <p className="text-accent/60 text-sm">No contractors found</p>
+              </div>
+            )}
+          </div>
 
-                      <div
-                        className={`flex-1 ${
-                          msg.isUser ? "items-end" : "items-start"
-                        } flex flex-col`}
-                      >
-                        <div
-                          className={`flex items-center gap-2 mb-2 ${
-                            msg.isUser ? "flex-row-reverse" : "flex-row"
-                          }`}
+          <div className="hidden lg:block bg-tertiary rounded-2xl overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-accent/10">
+                  <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                    Contractor
+                  </th>
+                  <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                    Status
+                  </th>
+                  <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                    Active Projects
+                  </th>
+                  <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                    Last Activity
+                  </th>
+                  <th className="text-right p-4 text-accent/70 font-semibold uppercase text-xs">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredContractors.map((contractor) => (
+                  <tr
+                    key={contractor.id}
+                    onClick={() => handleContractorSelect(contractor)}
+                    className={`border-b border-accent/10 hover:bg-accent/5 transition-colors cursor-pointer ${
+                      selectedContractor?.id === contractor.id
+                        ? "bg-accent/5"
+                        : ""
+                    }`}
+                  >
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Avatar
+                          className={`w-10 h-10 ${contractor.avatarColor}`}
                         >
-                          <span className="text-sm font-semibold text-accent">
-                            {msg.user}{" "}
-                            {msg.role && (
-                              <span className="text-accent/60">
-                                ({msg.role})
-                              </span>
-                            )}
-                          </span>
-                          <span className="text-xs text-accent/50">
-                            {msg.time}
-                          </span>
-                        </div>
-                        <div
-                          className={`px-5 py-3 rounded-2xl max-w-md ${
-                            msg.isUser
-                              ? "bg-primary text-white rounded-br-md"
-                              : "bg-white text-accent rounded-bl-md border border-accent/10"
-                          }`}
-                        >
-                          <p className="text-sm leading-relaxed">
-                            {msg.message}
+                          <AvatarFallback className="text-white font-bold">
+                            {contractor.initials}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-semibold text-accent">
+                            {contractor.name}
+                          </p>
+                          <p className="text-xs text-accent/60">
+                            {contractor.email}
                           </p>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-accent/10 bg-white p-6 space-y-3">
-              <Textarea
-                placeholder="Type a note to your editor..."
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                className="bg-white border-accent/20 text-accent placeholder:text-accent/40 focus:border-primary focus:ring-primary resize-none min-h-20"
-              />
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-accent/50">Press Enter to send</p>
-                <Button
-                  variant="ghost"
-                  className="text-danger hover:bg-danger/10 hover:text-danger gap-2 font-medium"
-                >
-                  <AlertCircle className="w-4 h-4" />
-                  Request Changes
-                </Button>
-              </div>
-            </div>
+                    </td>
+                    <td className="p-4">
+                      <Badge
+                        className={`${contractor.statusColor} border-0 font-semibold`}
+                      >
+                        {contractor.status}
+                      </Badge>
+                    </td>
+                    <td className="p-4 text-accent/70">
+                      {contractor.activeProjects}
+                    </td>
+                    <td className="p-4 text-accent/70">
+                      {contractor.lastActivity}
+                    </td>
+                    <td className="p-4">
+                      <div
+                        className="flex items-center justify-end gap-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ActionButton
+                          icon={Eye}
+                          label="View"
+                          onClick={() => handleContractorSelect(contractor)}
+                        />
+                        <ActionButton icon={MessageSquare} label="Message" />
+                        <ActionButton icon={MoreVertical} label="More" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+
+          {filteredContractors.length === 0 && (
+            <div className="hidden lg:block bg-tertiary rounded-2xl p-12 text-center">
+              <p className="text-accent/60">
+                No contractors found matching your criteria.
+              </p>
+            </div>
+          )}
         </div>
       </div>
+
+      <div
+        className={`
+          lg:hidden fixed inset-x-0 bottom-0 z-40 bg-white border-t border-gray-200 rounded-t-3xl
+          transition-transform duration-300 ease-out shadow-2xl
+          ${mobileDetailOpen ? "translate-y-0" : "translate-y-full"}
+        `}
+        style={{ maxHeight: "80vh" }}
+      >
+        <div className="h-full overflow-y-auto">
+          {selectedContractor && (
+            <ContractorDetail
+              contractor={selectedContractor}
+              onBack={() => setMobileDetailOpen(false)}
+              isMobile={true}
+            />
+          )}
+        </div>
+      </div>
+
+      {mobileDetailOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/60 z-30"
+          onClick={() => setMobileDetailOpen(false)}
+        />
+      )}
+
+      {selectedContractor && !mobileDetailOpen && (
+        <button
+          onClick={() => setMobileDetailOpen(true)}
+          className="lg:hidden fixed bottom-6 right-6 z-20 p-4 rounded-full bg-primary shadow-lg hover:bg-primary/90 transition-colors"
+        >
+          <ChevronUp className="w-5 h-5 text-white" />
+        </button>
+      )}
     </div>
   );
-};
-
-export default page;
+}
