@@ -124,7 +124,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
                 placeholder="Describe your project..."
                 rows={4}
                 {...register("projectDescription")}
-                className="   bg-white!
+                className="   bg-tertiary!
       border-accent/20
       text-accent
       placeholder:text-accent/40
@@ -140,7 +140,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
 
             <FormField label="Platform" required error={errors.platform}>
               <Select onValueChange={(value) => setValue("platform", value)}>
-                <SelectTrigger className="bg-white! border-accent/20 text-accent focus:border-primary focus:ring-primary placeholder:text-accent/80 w-full">
+                <SelectTrigger className="bg-tertiary! border-accent/20 text-accent focus:border-primary focus:ring-primary placeholder:text-accent/80 w-full">
                   <SelectValue placeholder="Select platform" />
                 </SelectTrigger>
                 <SelectContent>
@@ -155,7 +155,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
 
             <FormField label="Desired Length" required error={errors.platform}>
               <Select onValueChange={(value) => setValue("platform", value)}>
-                <SelectTrigger className="bg-white! border-accent/20 text-accent focus:border-primary focus:ring-primary placeholder:text-accent/80 w-full">
+                <SelectTrigger className="bg-tertiary! border-accent/20 text-accent focus:border-primary focus:ring-primary placeholder:text-accent/80 w-full">
                   <SelectValue placeholder="Select Length" />
                 </SelectTrigger>
                 <SelectContent>
@@ -204,7 +204,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
                   {uploadedFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between bg-white p-3 rounded-lg border border-accent/10"
+                      className="flex items-center justify-between bg-tertiary p-3 rounded-lg border border-accent/10"
                     >
                       <span className="text-sm text-accent truncate flex-1">
                         {file.name}
@@ -249,7 +249,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
                 placeholder="Describe the style, mood, transitions, etc."
                 rows={5}
                 className="
-      bg-white!
+      bg-tertiary!
       border-accent/20
       text-accent
       placeholder:text-accent/40
@@ -283,7 +283,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
                 rows={4}
                 {...register("additionalNotes")}
                 className="
-                 bg-white!
+                 bg-tertiary!
       border-accent/20
       text-accent
       placeholder:text-accent/40
@@ -308,7 +308,7 @@ export default function NewProjectRequestModal({ isOpen, setIsOpen }) {
               <Button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-full sm:w-auto bg-white text-md font-semibold font-onest text-primary hover:bg-accent/5"
+                className="w-full sm:w-auto bg-tertiary text-md font-semibold font-onest text-primary hover:bg-accent/5"
               >
                 Reset to defaults
               </Button>
