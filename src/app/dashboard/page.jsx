@@ -1,6 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import { Search, Edit, Download, MessageCircle,Users,Eye,MoreVertical } from "lucide-react";
+import {
+  Search,
+  Edit,
+  Download,
+  MessageCircle,
+  Users,
+  Eye,
+  MoreVertical,
+} from "lucide-react";
 import { stats, filters, projects } from "@/utils/dashboard";
 import StatCard from "@/components/Dashboard/StatCard";
 import { Input } from "@/components/ui/input";
@@ -13,11 +21,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const filteredProjects = projects.filter((project) => {
     const matchesFilter =
       activeFilter === "All" || project.status === activeFilter;
@@ -26,6 +36,10 @@ const Dashboard = () => {
       project.platform.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  const handleProjectView = (project) => {
+    router.push(`/dashboard/projects/${project.id}`);
+  };
 
   return (
     <div>
@@ -36,11 +50,8 @@ const Dashboard = () => {
               <h1 className="text-2xl sm:text-3xl font-bold text-accent mb-1 sm:mb-2">
                 Admin Dashboard
               </h1>
-          
             </div>
-    
           </div>
-
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
@@ -152,7 +163,7 @@ const Dashboard = () => {
                     <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
                       Last Updated
                     </th>
-                      <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
+                    <th className="text-left p-4 text-accent/70 font-semibold uppercase text-xs">
                       Assigned Contractors
                     </th>
                     <th className="text-right p-4 text-accent/70 font-semibold uppercase text-xs">
@@ -161,55 +172,55 @@ const Dashboard = () => {
                   </tr>
                 </thead>
 
-            <tbody>
-  {filteredProjects.map((project) => (
-    <tr
-      key={project.id}
-      className="border-b border-accent/10 hover:bg-accent/5 transition-colors"
-    >
+                <tbody>
+                  {filteredProjects.map((project) => (
+                    <tr
+                      key={project.id}
+                      className="border-b border-accent/10 hover:bg-accent/5 transition-colors"
+                    >
+                      <td className="p-4">
+                        <div className="space-y-2">
+                          <p className="font-semibold text-accent">
+                            {project.name}
+                          </p>
+                        </div>
+                      </td>
 
-      <td className="p-4">
-        <div className="space-y-2">
-          <p className="font-semibold text-accent">
-            {project.name}
-          </p>
+                      <td className="p-4">
+                        <StatusBadge status={project.status} />
+                      </td>
 
-     </div>
-      </td>
+                      <td className="p-4 text-accent/70">
+                        {project.lastUpdated}
+                      </td>
 
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={project.contractor.avatar}
+                            alt={project.contractor.name}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                          <span className="text-accent/80 text-sm">
+                            {project.contractor.name}
+                          </span>
+                        </div>
+                      </td>
 
-      <td className="p-4">
-        <StatusBadge status={project.status} />
-      </td>
-
-      <td className="p-4 text-accent/70">
-        {project.lastUpdated}
-      </td>
-
-      <td className="p-4">
-        <div className="flex items-center gap-3">
-          <img
-            src={project.contractor.avatar}
-            alt={project.contractor.name}
-            className="w-8 h-8 rounded-full object-cover"
-          />
-          <span className="text-accent/80 text-sm">
-            {project.contractor.name}
-          </span>
-        </div>
-      </td>
-
-      <td className="p-4">
-        <div className="flex items-center justify-end gap-2">
-          <ActionButton icon={Users} label="Assign" />
-          <ActionButton icon={Eye} label="View" />
-          <ActionButton icon={MoreVertical} label="More" />
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+                      <td className="p-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <ActionButton icon={Users} label="Assign" />
+                          <ActionButton
+                            icon={Eye}
+                            label="View"
+                            onClick={() => handleProjectView(project)}
+                          />
+                          <ActionButton icon={MoreVertical} label="More" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
 

@@ -15,6 +15,7 @@ import {
   RadioIcon,
   UserRoundIcon,
   UsersRound,
+  NotebookIcon,
 } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
@@ -102,19 +103,19 @@ export default function DashboardLayout({ children }) {
                   onClick={() => setIsSidebarOpen(false)}
                   className={`relative flex items-center gap-3 px-5 py-2 rounded-xl transition-all duration-300 group
                    ${
-      active
-        ? `
+                     active
+                       ? `
           bg-linear-to-tr  from-tertiary/90 to-secondary/50
           text-white
           shadow-lg shadow-primary/25
         `
-        : `
+                       : `
           text-accent
           hover:bg-tertiary/30
           hover:shadow-md hover:shadow-purple-500/10
           active:bg-tertiary/10
         `
-    }
+                   }
   `}
                   aria-current={active ? "page" : undefined}
                 >
@@ -239,23 +240,21 @@ export default function DashboardLayout({ children }) {
               </Link>
 
               <Link href="/dashboard/profile">
-              <div className="relative flex items-center gap-2 px-1 py-1 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95">
-                <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-linear-to-br from-purple-600 to-purple-400 shrink-0">
-                  <Image
-                    src="https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg"
-                    alt="Avatar"
-                    fill
-                    className="object-cover"
-                  />
+                <div className="relative flex items-center gap-2 px-1 py-1 lg:px-3 lg:py-2 rounded-full lg:rounded-full bg-tertiary hover:border-purple-400/70 hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.7)] transition-all duration-300 active:scale-95">
+                  <div className="relative w-8 h-8 lg:w-10 lg:h-10 rounded-full overflow-hidden bg-linear-to-br from-purple-600 to-purple-400 shrink-0">
+                    <Image
+                      src="https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg"
+                      alt="Avatar"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <span className="hidden lg:block text-sm lg:text-base font-semibold text-accent">
+                    John Doe
+                  </span>
                 </div>
-
-                <span className="hidden lg:block text-sm lg:text-base font-semibold text-accent">
-                  John Doe
-                </span>
-              </div>
               </Link>
-
-              
             </div>
           </div>
         </header>
