@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -22,6 +22,7 @@ export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [unreadCount, setUnreadCount] = useState(3);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -47,6 +48,19 @@ export default function DashboardLayout({ children }) {
       icon: UsersRound,
     },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isActive = (href) => {
     if (href === "/dashboard") {
@@ -206,7 +220,13 @@ export default function DashboardLayout({ children }) {
       )}
 
       <div className="lg:ml-72 pb-20 lg:pb-0">
-        <header className="sticky top-0 z-20 bg-secondary ">
+        <header
+          className={`sticky top-0 z-20 bg-secondary transition-all duration-300 ${
+            isScrolled
+              ? "shadow-lg bg-secondary/95"
+              : "shadow-none bg-secondary/90"
+          }`}
+        >
           <div className="flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4">
             <div className="flex items-center gap-3">
               <button

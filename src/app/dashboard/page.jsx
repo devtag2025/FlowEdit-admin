@@ -22,11 +22,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/common/Loader";
 
 const Dashboard = () => {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const filteredProjects = projects.filter((project) => {
     const matchesFilter =
@@ -38,11 +40,17 @@ const Dashboard = () => {
   });
 
   const handleProjectView = (project) => {
+    setLoading(true);
     router.push(`/dashboard/projects/${project.id}`);
   };
 
   return (
     <div>
+      {loading && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+          <Loader />
+        </div>
+      )}
       <div className="min-h-screen bg-secondary p-4 md:p-8">
         <div className="max-w-7xl mx-auto space-y-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
