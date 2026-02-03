@@ -49,7 +49,7 @@ export const filters = [
   "Processing",
   "Review",
   "Error",
-  "Complete",
+  "Completed",
 ];
 
 export const projects = [
@@ -82,7 +82,7 @@ export const projects = [
   {
     id: 3,
     name: "Testimonial Compilation",
-    status: "Complete",
+    status: "Completed",
     platform: "Facebook",
     lastUpdated: "10/25/2025",
     progress: 100,
