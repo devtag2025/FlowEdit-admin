@@ -37,7 +37,7 @@ function ProjectSection({ projectId }) {
 
           <div className="flex items-center gap-3">
             <span className="bg-slate-200 text-xs md:text-sm border rounded-full px-4 py-1 font-bold">
-              {project.platform} Reels
+              {project.platform}
             </span>
             <Badge className="bg-slate-200 text-primary text-xs md:text-sm border px-4 py-1">
               {project.status}
