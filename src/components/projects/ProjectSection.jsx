@@ -8,9 +8,11 @@ import { Card, CardContent } from "../ui/card";
 import { projects } from "@/utils/dashboard";
 import Link from "next/link";
 import ProjectComments from "./ProjectComments";
+import ProjectWorkflow from "./ProjectWorkflow";
 
 function ProjectSection({ projectId }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [showWorkflow, setShowWorkflow] = useState(false);
   const project = projects.find((p) => String(p.id) === String(projectId));
 
   if (!project) {
@@ -63,11 +65,18 @@ function ProjectSection({ projectId }) {
 
               <Button
                 variant="ghost"
-                className="text-tertiary bg-primary rounded-full text-base hover:bg-accent/5 px-5 py-6"
+                onClick={() => setShowWorkflow(!showWorkflow)}
+                className="text-tertiary bg-primary rounded-full text-base hover:bg-accent/5 px-5 py-6 cursor-pointer"
               >
                 Workflow
               </Button>
             </div>
+
+            {showWorkflow && (
+              <div className="mt-6">
+                <ProjectWorkflow currentStep={project.status.toLowerCase()} />
+              </div>
+            )}
 
             <div className="bg-tertiary/60 shadow-lg rounded-xl p-4 border border-accent/20">
               <p className="leading-relaxed">{project.description}</p>

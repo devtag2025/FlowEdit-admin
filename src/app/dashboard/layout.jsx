@@ -241,8 +241,7 @@ export default function DashboardLayout({ children }) {
             <div className="flex items-center gap-2 lg:gap-3">
               <Link href="/dashboard/notification">
                 <button
-                  className="relative sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full 
-  hover:bg-purple-500/20 transition-colors active:scale-95"
+                  className="relative sm:flex bg-tertiary p-2.5 lg:p-3 rounded-full hover:bg-purple-500/20 transition-colors active:scale-95 cursor-pointer"
                   aria-label="Notifications"
                 >
                   <Bell className="text-accent w-4 h-4 lg:w-5 lg:h-5" />

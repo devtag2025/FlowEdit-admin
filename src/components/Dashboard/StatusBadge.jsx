@@ -4,7 +4,7 @@ export const StatusBadge = ({ status }) => {
   const styles = {
     Review: "bg-primary/10 text-primary border-primary",
     Processing: "bg-yellow-100 text-yellow-700 border-yellow-700",
-    Complete: "bg-green-100 text-green-700 border-green-700",
+    Completed: "bg-green-100 text-green-700 border-green-700",
     Submitted: "bg-blue-100 text-blue-700 border-blue-700",
     Error: "bg-danger/10 text-danger border-danger",
   };
