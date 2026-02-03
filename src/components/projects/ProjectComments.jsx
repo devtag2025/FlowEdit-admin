@@ -85,11 +85,11 @@ export default function ProjectComments() {
   };
 
   return (
-    <div className="p-6 flex flex-col h-full">
+    <div className="p-3 md:p-6 flex flex-col h-full">
       <div className="flex justify-between items-center mb-4">
-        <h4 className="text-lg font-semibold">Comments</h4>
+        <h4 className="md:text-lg font-semibold">Comments</h4>
 
-        <div className="relative text-sm">
+        <div className="relative text-xs md:text-sm">
           <button
             onClick={() => setOpenSort(!openSort)}
             className="flex items-center gap-1 text-gray-600 hover:text-black"
@@ -134,7 +134,7 @@ export default function ProjectComments() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-            className="pr-20 py-5 border-0 border-b"
+            className="text-sm md:text-base pr-20 py-5 border-0 border-b"
           />
 
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
@@ -151,7 +151,7 @@ export default function ProjectComments() {
       <div className="space-y-5 overflow-y-auto pr-2 flex-1">
         {sortedMessages.map((msg) => (
           <div key={msg.id} className="flex gap-3">
-            <Avatar className="w-10 h-10 shrink-0">
+            <Avatar className="md:w-10 md:h-10 shrink-0">
               {msg.avatar ? (
                 <AvatarImage src={msg.avatar} />
               ) : (
@@ -162,15 +162,21 @@ export default function ProjectComments() {
             </Avatar>
 
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold">{msg.user}</span>
-                <span className="text-sm text-gray-500">{msg.time}</span>
-
-                {msg.isEditor && (
-                  <span className="text-xs text-gray-500 px-2 py-0.5">
-                    Internal
+              <div className="flex flex-col md:flex-row md:items-center md:gap-2 mb-1">
+                <span className="font-semibold text-sm md:text-base">
+                  {msg.user}
+                </span>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs md:text-sm text-gray-500">
+                    {msg.time}
                   </span>
-                )}
+
+                  {msg.isEditor && (
+                    <span className="text-xs text-gray-500 md:px-2 py-0.5">
+                      Internal
+                    </span>
+                  )}
+                </div>
               </div>
 
               <p className="text-gray-700 text-sm md:text-base leading-relaxed">
