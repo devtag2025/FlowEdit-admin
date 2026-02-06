@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import EmptyBroadcastDetail from "@/components/broadcasts/EmptyBroadcast";
 import BroadcastDetail from "@/components/broadcasts/BroadcastsDetail";
@@ -9,24 +9,25 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export default function BroadcastsPage() {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedBroadcast, setSelectedBroadcast] = useState(null);
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('Newest First');
+  const [sortOrder, setSortOrder] = useState("Newest First");
 
   const filteredBroadcasts = broadcasts.filter((broadcast) => {
-    const matchesFilter = activeFilter === 'All' || 
-      activeFilter === broadcast.audience;
-    const matchesSearch = 
+    const matchesFilter =
+      activeFilter === "All" || activeFilter === broadcast.audience;
+    const matchesSearch =
       broadcast.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       broadcast.content.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
-
-  const scheduledBroadcasts = filteredBroadcasts.filter(b => b.status === 'scheduled');
-  const sentBroadcasts = filteredBroadcasts.filter(b => b.status === 'sent');
+  const scheduledBroadcasts = filteredBroadcasts.filter(
+    (b) => b.status === "scheduled",
+  );
+  const sentBroadcasts = filteredBroadcasts.filter((b) => b.status === "sent");
 
   const handleBroadcastSelect = (broadcast) => {
     setSelectedBroadcast(broadcast);
@@ -42,25 +43,26 @@ export default function BroadcastsPage() {
     <div className="min-h-screen bg-secondary p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-accent">Broadcasts</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-accent">
+            Broadcasts
+          </h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
           <div className="lg:col-span-4 space-y-4">
             <div className="bg-tertiary rounded-3xl p-6 space-y-6">
-
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-col md:flex-row gap-2">
                 <h2 className="text-xl font-bold text-accent">Broadcasts</h2>
-                <Button className="bg-primary hover:bg-primary/90 text-white gap-2 rounded-xl">
+                <Button className="bg-primary hover:bg-primary/90 text-white gap-2 rounded-xl w-full md:w-fit">
                   <Plus className="w-4 h-4" />
                   New Broadcast
                 </Button>
               </div>
 
-
               <div>
-                <h3 className="text-xs font-semibold text-accent/60 uppercase mb-3">Scheduled</h3>
+                <h3 className="text-xs font-semibold text-accent/60 uppercase mb-3">
+                  Scheduled
+                </h3>
                 <div className="space-y-3">
                   {scheduledBroadcasts.length > 0 ? (
                     scheduledBroadcasts.map((broadcast) => (
@@ -68,30 +70,43 @@ export default function BroadcastsPage() {
                         key={broadcast.id}
                         onClick={() => handleBroadcastSelect(broadcast)}
                         className={`bg-tertiary rounded-2xl p-4 cursor-pointer transition-all hover:shadow-md ${
-                          selectedBroadcast?.id === broadcast.id ? 'ring-2 ring-primary' : ''
+                          selectedBroadcast?.id === broadcast.id
+                            ? "ring-2 ring-primary"
+                            : ""
                         }`}
                       >
-                        <h4 className="font-semibold text-accent mb-2">{broadcast.title}</h4>
+                        <h4 className="font-semibold text-accent mb-2">
+                          {broadcast.title}
+                        </h4>
                         <div className="flex gap-2 mb-2">
-                          <Badge className={`${broadcast.audienceColor} border-0 text-xs`}>
+                          <Badge
+                            className={`${broadcast.audienceColor} border-0 text-xs`}
+                          >
                             {broadcast.audience}
                           </Badge>
-                          <Badge className={`${broadcast.priorityColor} border-0 text-xs`}>
+                          <Badge
+                            className={`${broadcast.priorityColor} border-0 text-xs`}
+                          >
                             {broadcast.priority}
                           </Badge>
                         </div>
-                        <p className="text-xs text-accent/60">{broadcast.scheduledFor}</p>
+                        <p className="text-xs text-accent/60">
+                          {broadcast.scheduledFor}
+                        </p>
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-accent/40 text-center py-4">No scheduled broadcasts</p>
+                    <p className="text-sm text-accent/40 text-center py-4">
+                      No scheduled broadcasts
+                    </p>
                   )}
                 </div>
               </div>
 
-
               <div>
-                <h3 className="text-xs font-semibold text-accent/60 uppercase mb-3">Sent</h3>
+                <h3 className="text-xs font-semibold text-accent/60 uppercase mb-3">
+                  Sent
+                </h3>
                 <div className="space-y-3">
                   {sentBroadcasts.length > 0 ? (
                     sentBroadcasts.map((broadcast) => (
@@ -99,15 +114,23 @@ export default function BroadcastsPage() {
                         key={broadcast.id}
                         onClick={() => handleBroadcastSelect(broadcast)}
                         className={`bg-tertiary rounded-2xl p-4 cursor-pointer transition-all hover:shadow-md ${
-                          selectedBroadcast?.id === broadcast.id ? 'ring-2 ring-primary' : ''
+                          selectedBroadcast?.id === broadcast.id
+                            ? "ring-2 ring-primary"
+                            : ""
                         }`}
                       >
-                        <h4 className="font-semibold text-accent mb-2">{broadcast.title}</h4>
+                        <h4 className="font-semibold text-accent mb-2">
+                          {broadcast.title}
+                        </h4>
                         <div className="flex gap-2 mb-2">
-                          <Badge className={`${broadcast.audienceColor} border-0 text-xs`}>
+                          <Badge
+                            className={`${broadcast.audienceColor} border-0 text-xs`}
+                          >
                             {broadcast.audience}
                           </Badge>
-                          <Badge className={`${broadcast.priorityColor} border-0 text-xs`}>
+                          <Badge
+                            className={`${broadcast.priorityColor} border-0 text-xs`}
+                          >
                             {broadcast.priority}
                           </Badge>
                         </div>
@@ -122,18 +145,19 @@ export default function BroadcastsPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-accent/40 text-center py-4">No sent broadcasts</p>
+                    <p className="text-sm text-accent/40 text-center py-4">
+                      No sent broadcasts
+                    </p>
                   )}
                 </div>
               </div>
             </div>
           </div>
 
-          
           <div className="hidden lg:block lg:col-span-8">
             <div className="bg-tertiary rounded-3xl p-6 min-h-150">
               {selectedBroadcast ? (
-                <BroadcastDetail 
+                <BroadcastDetail
                   broadcast={selectedBroadcast}
                   onBack={handleBackToList}
                   activeFilter={activeFilter}
@@ -148,7 +172,6 @@ export default function BroadcastsPage() {
           </div>
 
           <div className="lg:hidden space-y-4">
-
             <div className="flex gap-2 overflow-x-auto pb-2">
               {filters.map((filter) => (
                 <button
@@ -156,8 +179,8 @@ export default function BroadcastsPage() {
                   onClick={() => setActiveFilter(filter)}
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                     activeFilter === filter
-                      ? 'bg-primary text-white shadow-md'
-                      : 'bg-tertiary text-accent hover:bg-accent/5'
+                      ? "bg-primary text-white shadow-md"
+                      : "bg-tertiary text-accent hover:bg-accent/5"
                   }`}
                 >
                   {filter}
@@ -184,18 +207,26 @@ export default function BroadcastsPage() {
                   className="bg-tertiary rounded-2xl p-4 cursor-pointer hover:shadow-lg transition-shadow"
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-semibold text-accent flex-1">{broadcast.title}</h3>
-                    <Badge className={`${broadcast.priorityColor} border-0 text-xs ml-2`}>
+                    <h3 className="font-semibold text-accent flex-1">
+                      {broadcast.title}
+                    </h3>
+                    <Badge
+                      className={`${broadcast.priorityColor} border-0 text-xs ml-2`}
+                    >
                       {broadcast.priority}
                     </Badge>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge className={`${broadcast.audienceColor} border-0 text-xs`}>
+                    <Badge
+                      className={`${broadcast.audienceColor} border-0 text-xs`}
+                    >
                       {broadcast.audience}
                     </Badge>
-                    {broadcast.status === 'scheduled' ? (
-                      <span className="text-xs text-accent/60">{broadcast.scheduledFor}</span>
+                    {broadcast.status === "scheduled" ? (
+                      <span className="text-xs text-accent/60">
+                        {broadcast.scheduledFor}
+                      </span>
                     ) : (
                       <span className="text-xs text-accent/60 flex items-center gap-1">
                         <Eye className="w-3 h-3" />
@@ -204,7 +235,9 @@ export default function BroadcastsPage() {
                     )}
                   </div>
 
-                  <p className="text-sm text-accent/70 line-clamp-2">{broadcast.content}</p>
+                  <p className="text-sm text-accent/70 line-clamp-2">
+                    {broadcast.content}
+                  </p>
                 </div>
               ))}
             </div>
