@@ -14,20 +14,24 @@ export default function ProjectDetails() {
               Editing Instructions
             </h4>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Upbeat summer vibes, fast cuts, use the provided logo overlay. Add
-              subtle color grading to enhance warm tones. Include transitions
-              between product shots.
+              Follow the brand guidelines in the cloud folder.Use quick cuts
+              with 0.5 - 1 second duration per clip. Add upbeat background music
+              (licensed track provided). Include text overlays with our brand
+              font (Montserrat Bold).
             </p>
           </div>
 
-          <div className="mb-6 p-4 bg-gray-50/50 rounded-lg">
-            <h4 className="text-xs font-bold text-[#2d1b69]/60 mb-2 uppercase tracking-widest">
-              Branding Elements
-            </h4>
+          <div className="mb-6 p-4 bg-gray-200 rounded-lg">
+            <div className="flex gap-2">
+              <input type="checkbox" className="w-4 h-4" />
+              <h4 className="text-xs font-bold text-[#2d1b69]/60 mb-2 uppercase tracking-widest">
+                Apply my branding template to this project
+              </h4>
+            </div>
+
             <p className="text-sm text-gray-700 leading-relaxed">
-              Brand colors, logos, fonts, or previous editing styles to follow.
-              These settings come from the client's account-level branding
-              preferences.
+              Your saved brand colors, fonts, logos, and preferred editing style
+              will be automatically applied to this video.
             </p>
           </div>
 
@@ -40,7 +44,7 @@ export default function ProjectDetails() {
                 Required
               </span>
             </div>
-            <button className="w-full bg-[#6a4dff] hover:bg-[#2d1b69] text-white rounded-lg px-4 py-3 font-medium text-sm flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98]">
+            <button className="w-full bg-[#6a4dff] hover:bg-[#2d1b69] text-white rounded-lg px-4 py-3 font-medium text-sm flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] cursor-pointer">
               <FolderOpen className="w-4 h-4" /> Open Folder
             </button>
             <p className="text-[11px] text-gray-500 mt-2 italic text-center">
@@ -57,7 +61,7 @@ export default function ProjectDetails() {
                 Optional
               </span>
             </div>
-            <button className="w-full border-2 border-[#6a4dff] text-[#6a4dff] hover:bg-[#e8e3f8] rounded-lg px-4 py-3 font-medium text-sm flex items-center justify-center gap-2 transition-all">
+            <button className="w-full border-2 border-[#6a4dff] text-[#6a4dff] hover:bg-[#e8e3f8] rounded-lg px-4 py-3 font-medium text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
               <Upload className="w-4 h-4" /> Upload Files
             </button>
             <div className="mt-3 p-4 bg-white border border-dashed border-gray-300 rounded-lg text-center">

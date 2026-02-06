@@ -17,7 +17,7 @@ export const workflowSteps = [
     id: "review",
     label: "Review",
     roles: [
-      { name: "AD", role: "Reviewer", color: "bg-[#FFA726]" },
+      { name: "AD", role: "Primary Reviewer", color: "bg-[#FFA726]" },
       { name: "SM", role: "Client", color: "bg-[#5C6BC0]" },
     ],
   },
