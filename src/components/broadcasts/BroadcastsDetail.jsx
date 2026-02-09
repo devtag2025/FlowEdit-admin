@@ -117,7 +117,7 @@ const BroadcastDetail = ({
             <button
               key={filter}
               onClick={() => setActiveFilter && setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                 activeFilter === filter
                   ? "bg-primary text-white shadow-md"
                   : "bg-tertiary text-accent hover:bg-accent/5"
@@ -128,7 +128,7 @@ const BroadcastDetail = ({
           ))}
         </div>
 
-        <button className="flex items-center gap-2 px-4 py-2 bg-tertiary rounded-full text-sm font-medium text-accent hover:bg-accent/5 transition-all">
+        <button className="flex items-center gap-2 px-4 py-2 bg-tertiary rounded-full text-sm font-medium text-accent hover:bg-accent/5 transition-all cursor-pointer">
           {sortOrder || "Newest First"}
           <ChevronDown className="w-4 h-4" />
         </button>
