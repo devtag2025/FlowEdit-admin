@@ -3,10 +3,11 @@ import { useState } from "react";
 import EmptyBroadcastDetail from "@/components/broadcasts/EmptyBroadcast";
 import BroadcastDetail from "@/components/broadcasts/BroadcastsDetail";
 import { broadcasts, filters } from "@/utils/broadcastpage";
-import { Plus, Search, Eye, Edit, Trash2, ChevronUp } from "lucide-react";
+import { Plus, Search, Eye, ChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import NewBroadcast from "@/components/broadcasts/NewBroadcast";
 
 export default function BroadcastsPage() {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -14,6 +15,7 @@ export default function BroadcastsPage() {
   const [selectedBroadcast, setSelectedBroadcast] = useState(null);
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState("Newest First");
+  const [newBroadCast, setNewBroadCast] = useState(false);
 
   const filteredBroadcasts = broadcasts.filter((broadcast) => {
     const matchesFilter =
@@ -28,6 +30,12 @@ export default function BroadcastsPage() {
     (b) => b.status === "scheduled",
   );
   const sentBroadcasts = filteredBroadcasts.filter((b) => b.status === "sent");
+
+  const handleNewBroadCast = () => {
+    setSelectedBroadcast(null);
+    setNewBroadCast(true);
+    setMobileDetailOpen(true);
+  };
 
   const handleBroadcastSelect = (broadcast) => {
     setSelectedBroadcast(broadcast);
@@ -53,7 +61,10 @@ export default function BroadcastsPage() {
             <div className="bg-tertiary rounded-3xl p-6 space-y-6">
               <div className="flex items-center justify-between flex-col md:flex-row gap-2">
                 <h2 className="text-xl font-bold text-accent">Broadcasts</h2>
-                <Button className="bg-primary hover:bg-primary/90 text-white gap-2 rounded-xl w-full md:w-fit">
+                <Button
+                  className="bg-primary hover:bg-primary/90 text-white gap-2 rounded-xl w-full md:w-fit"
+                  onClick={() => handleNewBroadCast()}
+                >
                   <Plus className="w-4 h-4" />
                   New Broadcast
                 </Button>
@@ -156,7 +167,9 @@ export default function BroadcastsPage() {
 
           <div className="hidden lg:block lg:col-span-8">
             <div className="bg-tertiary rounded-3xl p-6 min-h-150">
-              {selectedBroadcast ? (
+              {newBroadCast ? (
+                <NewBroadcast onCancel={() => setNewBroadCast(false)} />
+              ) : selectedBroadcast ? (
                 <BroadcastDetail
                   broadcast={selectedBroadcast}
                   onBack={handleBackToList}
@@ -253,20 +266,28 @@ export default function BroadcastsPage() {
       </div>
 
       <div
-        className={`
-          lg:hidden fixed inset-x-0 bottom-0 z-40 bg-tertiary border-t border-accent/10 rounded-t-3xl
-          transition-transform duration-300 ease-out shadow-2xl
-          ${mobileDetailOpen ? "translate-y-0" : "translate-y-full"}
-        `}
-        style={{ maxHeight: "85vh" }}
+        className={`lg:hidden fixed inset-x-0 bottom-0 z-40 bg-tertiary border-accent/10 rounded-t-3xl transition-transform duration-300 ease-out shadow-2xl h-[85vh] ${mobileDetailOpen ? "translate-y-0" : "translate-y-full"}`}
       >
-        <div className="h-full overflow-y-auto">
-          {selectedBroadcast && (
-            <BroadcastDetail
-              broadcast={selectedBroadcast}
-              onBack={() => setMobileDetailOpen(false)}
-              isMobile={true}
+        <div className="flex justify-center py-2">
+          <div className="w-12 h-1 bg-gray-300 rounded-full" />
+        </div>
+
+        <div className="h-[calc(85vh-24px)] overflow-y-auto overscroll-contain px-4 pb-6">
+          {newBroadCast ? (
+            <NewBroadcast
+              onCancel={() => {
+                setNewBroadCast(false);
+                setMobileDetailOpen(false);
+              }}
             />
+          ) : (
+            selectedBroadcast && (
+              <BroadcastDetail
+                broadcast={selectedBroadcast}
+                onBack={() => setMobileDetailOpen(false)}
+                isMobile={true}
+              />
+            )
           )}
         </div>
       </div>

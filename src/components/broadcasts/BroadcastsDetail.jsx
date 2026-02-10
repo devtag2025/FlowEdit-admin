@@ -9,7 +9,6 @@ const BroadcastDetail = ({
   activeFilter,
   setActiveFilter,
   sortOrder,
-  setSortOrder,
 }) => {
   if (isMobile) {
     return (
