@@ -2,14 +2,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 :root {
   --primary: #6a4dff;
   --secondary: #a5c9e8;
   --tertiary: #e8e3f8;
   --danger: #ff4d6a;
   --accent: #2d1b69;
-
 
   --background: #ffffff;
   --foreground: #171717;
@@ -97,7 +95,6 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -127,7 +124,6 @@
   --ring: oklch(0.556 0 0);
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -136,4 +132,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd; /* Subtle gray color */
+  pointer-events: none;
+  height: 0;
 }
