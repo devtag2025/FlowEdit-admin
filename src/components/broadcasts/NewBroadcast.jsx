@@ -23,7 +23,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
-
+import { useCreateBroadcast } from "@/hooks/useBroadcast";
 import {
   Select,
   SelectContent,
@@ -33,6 +33,7 @@ import {
 } from "../ui/select";
 
 const NewBroadcast = ({ onCancel }) => {
+  const { mutate: createBroadcast, isPending } = useCreateBroadcast();
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("");
@@ -59,6 +60,25 @@ const NewBroadcast = ({ onCancel }) => {
     onUpdate: ({ editor }) =>
       setFormData((prev) => ({ ...prev, content: editor.getHTML() })),
   });
+
+  const handleSubmit = () => {
+  if (!formData.title.trim()) return toast.error("Title is required");
+  if (!formData.content.trim()) return toast.error("Message is required");
+  if (isScheduled && (!scheduleDate || !scheduleTime)) {
+    return toast.error("Please select a date and time");
+  }
+  createBroadcast(
+    {
+      ...formData,
+      isScheduled,
+      scheduleDate,
+      scheduleTime,
+    },
+    {
+      onSuccess: () => onCancel(), 
+    }
+  );
+
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
@@ -259,10 +279,17 @@ const NewBroadcast = ({ onCancel }) => {
         >
           Cancel
         </Button>
-        <Button className="bg-primary hover:bg-primary/90 text-white rounded-xl gap-2 px-4">
-          Send Broadcast
-          <Check className="w-4 h-4 text-white" />
-        </Button>
+      <Button
+  onClick={handleSubmit}
+  disabled={isPending}
+  className="bg-primary hover:bg-primary/90 text-white"
+>
+  {isPending
+    ? "Sending..."
+    : isScheduled
+      ? "Schedule Broadcast"
+      : "Send Broadcast"}
+</Button>
       </div>
     </div>
   );

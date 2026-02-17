@@ -2,14 +2,16 @@
 import { useState } from "react";
 import EmptyBroadcastDetail from "@/components/broadcasts/EmptyBroadcast";
 import BroadcastDetail from "@/components/broadcasts/BroadcastsDetail";
-import { broadcasts, filters } from "@/utils/broadcastpage";
+// import { broadcasts, filters } from "@/utils/broadcastpage";
 import { Plus, Search, Eye, ChevronUp } from "lucide-react";
+import { useBroadcasts } from "@/hooks/useBroadcast";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import NewBroadcast from "@/components/broadcasts/NewBroadcast";
 
 export default function BroadcastsPage() {
+  const { data: broadcasts = [], isLoading } = useBroadcasts();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBroadcast, setSelectedBroadcast] = useState(null);
