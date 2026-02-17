@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import NewBroadcast from "@/components/broadcasts/NewBroadcast";
-
+import { filters } from "@/utils/broadcastpage";
 export default function BroadcastsPage() {
   const { data: broadcasts = [], isLoading } = useBroadcasts();
   const [activeFilter, setActiveFilter] = useState("All");

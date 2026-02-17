@@ -1,8 +1,7 @@
+"use client";
 import React, { useState } from "react";
 import {
   X,
-  CheckSquare,
-  Square,
   Check,
   TextAlignJustify,
   TextAlignStart,
@@ -13,6 +12,7 @@ import {
   Bold,
   Italic,
   UnderlineIcon,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
+import toast from "react-hot-toast";
 import { useCreateBroadcast } from "@/hooks/useBroadcast";
 import {
   Select,
@@ -33,16 +34,16 @@ import {
 } from "../ui/select";
 
 const NewBroadcast = ({ onCancel }) => {
-  const { mutate: createBroadcast, isPending } = useCreateBroadcast();
-  const [isScheduled, setIsScheduled] = useState(false);
+  const [isScheduled, setIsScheduled]   = useState(false);
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("");
-  const [formData, setFormData] = useState({
-    title: "",
+  const [formData, setFormData]         = useState({
+    title:      "",
     recipients: "All",
-    priority: "Normal",
-    content: "",
+    priority:   "Active",
   });
+
+  const { mutate: createBroadcast, isPending } = useCreateBroadcast();
 
   const editor = useEditor({
     extensions: [
@@ -57,31 +58,35 @@ const NewBroadcast = ({ onCancel }) => {
     ],
     content: "",
     immediatelyRender: false,
-    onUpdate: ({ editor }) =>
-      setFormData((prev) => ({ ...prev, content: editor.getHTML() })),
   });
 
   const handleSubmit = () => {
-  if (!formData.title.trim()) return toast.error("Title is required");
-  if (!formData.content.trim()) return toast.error("Message is required");
-  if (isScheduled && (!scheduleDate || !scheduleTime)) {
-    return toast.error("Please select a date and time");
-  }
-  createBroadcast(
-    {
-      ...formData,
-      isScheduled,
-      scheduleDate,
-      scheduleTime,
-    },
-    {
-      onSuccess: () => onCancel(), 
-    }
-  );
+    const content = editor?.getHTML() || "";
+    const isEmpty = !content || content === "<p></p>" || content.trim() === "";
 
+    if (!formData.title.trim())  return toast.error("Title is required");
+    if (isEmpty)                  return toast.error("Message is required");
+    if (isScheduled && (!scheduleDate || !scheduleTime)) {
+      return toast.error("Please select a date and time");
+    }
+
+    createBroadcast(
+      {
+        ...formData,
+        content,
+        isScheduled,
+        scheduleDate,
+        scheduleTime,
+      },
+      {
+        onSuccess: () => onCancel(),
+      }
+    );
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-accent">New Broadcast</h2>
         <button
@@ -93,18 +98,18 @@ const NewBroadcast = ({ onCancel }) => {
       </div>
 
       <div className="bg-white rounded-2xl p-6 space-y-5">
+        {/* Title */}
         <div>
           <label className="font-bold text-accent mb-2 block">Title</label>
           <Input
             placeholder="Enter broadcast title..."
-            className="bg-tertiary border-accent/20 h-10 font-medium"
             value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            className="bg-tertiary border-accent/20 h-10 font-medium"
           />
         </div>
 
+        {/* Recipients */}
         <div>
           <label className="font-bold text-accent mb-2 block">Recipients</label>
           <Select
@@ -116,26 +121,20 @@ const NewBroadcast = ({ onCancel }) => {
             <SelectTrigger className="w-full h-12 border-accent/20 text-accent transition-all">
               <SelectValue placeholder="Select recipient..." />
             </SelectTrigger>
-
-            <SelectContent className="border-accent/20 shadow-lg p-1 overflow-hidden">
-              {["All", "Management", "Contractors"].map((option) => {
+            <SelectContent className="border-accent/20 shadow-lg p-1">
+              {["All", "Management", "Contractors", "Clients"].map((option) => {
                 const isSelected = formData.recipients === option;
-
                 return (
                   <SelectItem
                     key={option}
                     value={option}
-                    showCheckIcon={false}
-                    className={`flex items-center gap-3 px-2 py-2 cursor-pointer transition-colors ${isSelected ? "bg-primary/10 text-primary" : "text-accent hover:bg-accent/5"}`}
+                    className={`flex items-center gap-3 px-2 py-2 cursor-pointer transition-colors ${
+                      isSelected
+                        ? "bg-primary/10 text-primary"
+                        : "text-accent hover:bg-accent/5"
+                    }`}
                   >
-                    <div className="flex items-center gap-3 w-full">
-                      {isSelected ? (
-                        <CheckSquare className="w-5 h-5 text-primary" />
-                      ) : (
-                        <Square className="w-5 h-5 text-accent/50" />
-                      )}
-                      <span className="font-medium text-base">{option}</span>
-                    </div>
+                    {option}
                   </SelectItem>
                 );
               })}
@@ -143,153 +142,218 @@ const NewBroadcast = ({ onCancel }) => {
           </Select>
         </div>
 
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <label className="font-bold text-accent">Scheduled</label>
-
-            <input
-              type="checkbox"
-              checked={!isScheduled}
-              onChange={() => setIsScheduled((prev) => !prev)}
-              className="w-4 h-4 accent-primary"
-            />
-
-            <span className="text-sm text-accent/70">Send immediately</span>
-          </div>
-
-          {isScheduled && (
-            <div className="flex flex-col lg:flex-row gap-3">
-              <div className="flex-1">
-                <Input
-                  type="date"
-                  value={scheduleDate}
-                  onChange={(e) => setScheduleDate(e.target.value)}
-                  className="h-10 rounded-lg cursor-pointer border-accent/20"
-                />
-              </div>
-
-              <div className="flex-1">
-                <Input
-                  type="time"
-                  value={scheduleTime}
-                  onChange={(e) => setScheduleTime(e.target.value)}
-                  className="h-10 rounded-lg cursor-pointer border-accent/20"
-                />
-              </div>
-            </div>
-          )}
+        {/* Priority */}
+        <div>
+          <label className="font-bold text-accent mb-2 block">Priority</label>
+          <Select
+            value={formData.priority}
+            onValueChange={(value) =>
+              setFormData({ ...formData, priority: value })
+            }
+          >
+            <SelectTrigger className="w-full h-12 border-accent/20 text-accent transition-all">
+              <SelectValue placeholder="Select priority..." />
+            </SelectTrigger>
+            <SelectContent className="border-accent/20 shadow-lg p-1">
+              {["Immediate", "Scheduled", "Active", "Admin"].map((option) => {
+                const isSelected = formData.priority === option;
+                return (
+                  <SelectItem
+                    key={option}
+                    value={option}
+                    className={`flex items-center gap-3 px-2 py-2 cursor-pointer transition-colors ${
+                      isSelected
+                        ? "bg-primary/10 text-primary"
+                        : "text-accent hover:bg-accent/5"
+                    }`}
+                  >
+                    {option}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
         </div>
 
+        {/* Schedule Toggle */}
+        <div>
+          <label className="font-bold text-accent mb-2 block">Schedule</label>
+          <button
+            type="button"
+            onClick={() => setIsScheduled(!isScheduled)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all ${
+              isScheduled
+                ? "bg-primary/10 border-primary text-primary"
+                : "border-accent/20 text-accent hover:bg-accent/5"
+            }`}
+          >
+            {isScheduled ? "Scheduled" : "Send Now"}
+          </button>
+        </div>
+
+        {/* Schedule Date/Time */}
+        {isScheduled && (
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="text-sm text-accent/60 mb-1 block">Date</label>
+              <Input
+                type="date"
+                value={scheduleDate}
+                onChange={(e) => setScheduleDate(e.target.value)}
+                className="bg-tertiary border-accent/20 text-accent h-10"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="text-sm text-accent/60 mb-1 block">Time</label>
+              <Input
+                type="time"
+                value={scheduleTime}
+                onChange={(e) => setScheduleTime(e.target.value)}
+                className="bg-tertiary border-accent/20 text-accent h-10"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Content Editor */}
         <div>
           <label className="font-bold text-accent mb-2 block">Content</label>
           <div className="rounded-xl border border-accent/10 bg-tertiary/80 p-3">
-            <div className="flex gap-2 lg:gap-3 border-b border-accent/10 text-accent pb-2">
+
+            {/* Toolbar */}
+            <div className="flex gap-2 lg:gap-3 border-b border-accent/10 text-accent pb-2 flex-wrap">
               <button
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().toggleBold().run()}
+                className={`cursor-pointer p-1 rounded transition-colors ${
+                  editor?.isActive("bold") ? "bg-primary/20 text-primary" : "hover:bg-accent/10"
+                }`}
               >
                 <Bold className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                className={`cursor-pointer p-1 rounded transition-colors ${
+                  editor?.isActive("italic") ? "bg-primary/20 text-primary" : "hover:bg-accent/10"
+                }`}
               >
                 <Italic className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => editor.chain().focus().toggleUnderline().run()}
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                className={`cursor-pointer p-1 rounded transition-colors ${
+                  editor?.isActive("underline") ? "bg-primary/20 text-primary" : "hover:bg-accent/10"
+                }`}
               >
                 <UnderlineIcon className="w-4 h-4" />
               </button>
 
+              <div className="w-px bg-accent/10 mx-1" />
+
               <button
-                onClick={() =>
-                  editor.chain().focus().setTextAlign("left").run()
-                }
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().setTextAlign("left").run()}
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <TextAlignStart className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() =>
-                  editor.chain().focus().setTextAlign("center").run()
-                }
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().setTextAlign("center").run()}
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <TextAlignCenter className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() =>
-                  editor.chain().focus().setTextAlign("right").run()
-                }
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().setTextAlign("right").run()}
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <TextAlignEnd className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() =>
-                  editor.chain().focus().setTextAlign("justify").run()
-                }
-                className="cursor-pointer"
+                type="button"
+                onClick={() => editor?.chain().focus().setTextAlign("justify").run()}
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <TextAlignJustify className="w-4 h-4" />
               </button>
 
+              <div className="w-px bg-accent/10 mx-1" />
+
               <button
+                type="button"
                 onClick={() => {
                   const url = prompt("Enter image URL");
-                  if (url) editor.chain().focus().setImage({ src: url }).run();
+                  if (url) editor?.chain().focus().setImage({ src: url }).run();
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <ImageIcon className="w-4 h-4" />
               </button>
 
               <button
+                type="button"
                 onClick={() => {
                   const url = prompt("Enter URL");
-                  if (url) editor.chain().focus().setLink({ href: url }).run();
+                  if (url) editor?.chain().focus().setLink({ href: url }).run();
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer p-1 rounded hover:bg-accent/10 transition-colors"
               >
                 <LinkIcon className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="">
-              <EditorContent
-                editor={editor}
-                className="mt-2 min-h-[100px] text-accent focus:outline-none focus:border-none text-sm lg:text-base"
-              />
-            </div>
+            {/* Editor */}
+            <EditorContent
+              editor={editor}
+              className="mt-3 min-h-[150px] text-accent text-sm lg:text-base focus:outline-none"
+            />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-row pt-4 justify-between">
+      {/* Footer Buttons */}
+      <div className="flex flex-row pt-2 justify-between">
         <Button
+          type="button"
           className="bg-accent/10 text-primary rounded-xl hover:bg-accent/40 hover:text-white"
           onClick={onCancel}
+          disabled={isPending}
         >
           Cancel
         </Button>
-      <Button
-  onClick={handleSubmit}
-  disabled={isPending}
-  className="bg-primary hover:bg-primary/90 text-white"
->
-  {isPending
-    ? "Sending..."
-    : isScheduled
-      ? "Schedule Broadcast"
-      : "Send Broadcast"}
-</Button>
+
+        <Button
+          type="button"
+          onClick={handleSubmit}
+          disabled={isPending}
+          className="bg-primary hover:bg-primary/90 text-white rounded-xl gap-2 px-4"
+        >
+          {isPending ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Sending...
+            </>
+          ) : isScheduled ? (
+            <>
+              Schedule Broadcast
+              <Check className="w-4 h-4 text-white" />
+            </>
+          ) : (
+            <>
+              Send Broadcast
+              <Check className="w-4 h-4 text-white" />
+            </>
+          )}
+        </Button>
       </div>
     </div>
   );

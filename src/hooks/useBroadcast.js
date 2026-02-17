@@ -11,6 +11,7 @@ export function useBroadcasts() {
   return useQuery({
     queryKey: broadcastKeys.all,
     queryFn: BroadcastService.getAll,
+    staleTime: 1000 * 60 * 2,   
   });
 }
 
@@ -27,19 +28,16 @@ export function useCreateBroadcast() {
 
   return useMutation({
     mutationFn: BroadcastService.create,
-
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: broadcastKeys.all });
       toast.success(
         data.status === "scheduled"
-          ? "Broadcast scheduled successfully!"
-          : "Broadcast sent successfully!"
+          ? "Broadcast scheduled!"
+          : "Broadcast sent!"
       );
     },
-
     onError: (error) => {
       toast.error(error.message || "Failed to create broadcast.");
-      console.error("Create broadcast failed:", error);
     },
   });
 }
@@ -49,13 +47,11 @@ export function useUpdateBroadcast() {
 
   return useMutation({
     mutationFn: ({ id, updates }) => BroadcastService.update(id, updates),
-
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: broadcastKeys.all });
       queryClient.invalidateQueries({ queryKey: broadcastKeys.detail(data.id) });
-      toast.success("Broadcast updated successfully!");
+      toast.success("Broadcast updated!");
     },
-
     onError: (error) => {
       toast.error(error.message || "Failed to update broadcast.");
     },
@@ -67,12 +63,10 @@ export function useDeleteBroadcast() {
 
   return useMutation({
     mutationFn: BroadcastService.remove,
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: broadcastKeys.all });
       toast.success("Broadcast deleted.");
     },
-
     onError: (error) => {
       toast.error(error.message || "Failed to delete broadcast.");
     },
